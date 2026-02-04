@@ -1,0 +1,259 @@
+{
+  "textures": [
+    {
+      "id": "1769519654738",
+      "name": "#1",
+      "image": "textures/-1.webp"
+    },
+    {
+      "id": "1769519676496",
+      "name": "#2",
+      "image": "textures/-2.webp"
+    },
+    {
+      "id": "1769519713744",
+      "name": "#3",
+      "image": "textures/-3.webp"
+    },
+    {
+      "id": "1769519737002",
+      "name": "#4",
+      "image": "textures/-4.webp"
+    },
+    {
+      "id": "1769519761612",
+      "name": "#5",
+      "image": "textures/-5.webp"
+    },
+    {
+      "id": "1769519809262",
+      "name": "#6",
+      "image": "textures/-6.webp"
+    },
+    {
+      "id": "1769521589941",
+      "name": "#7",
+      "image": "textures/-7.webp"
+    },
+    {
+      "id": "1769523745999",
+      "name": "#8",
+      "image": "textures/-8.webp"
+    },
+    {
+      "id": "1769523772226",
+      "name": "#9",
+      "image": "textures/-9.webp"
+    },
+    {
+      "id": "1769524277509",
+      "name": "#10",
+      "image": "textures/-10.webp"
+    },
+    {
+      "id": "1769770084012",
+      "name": "#11",
+      "image": "textures/-11.webp"
+    },
+    {
+      "id": "1769770332497",
+      "name": "#12",
+      "image": "textures/-12.webp"
+    },
+    {
+      "id": "1769771739367",
+      "name": "#13",
+      "image": "textures/-13.webp"
+    },
+    {
+      "id": "1769771991709",
+      "name": "#14",
+      "image": "textures/-14.webp"
+    },
+    {
+      "id": "1769772439613",
+      "name": "#15",
+      "image": "textures/-15.webp"
+    },
+    {
+      "id": "1769781278569",
+      "name": "#16",
+      "image": "textures/-16.webp"
+    },
+    {
+      "id": "1769782249303",
+      "name": "#17",
+      "image": "textures/-17.webp"
+    },
+    {
+      "id": "1769782502525",
+      "name": "#18",
+      "image": "textures/-18.webp"
+    },
+    {
+      "id": "1769783309138",
+      "name": "#19 (クリア)",
+      "image": "textures/-19------.webp"
+    },
+    {
+      "id": "1769783613027",
+      "name": "#20",
+      "image": "textures/-20.webp"
+    },
+    {
+      "id": "1769783870929",
+      "name": "#21",
+      "image": "textures/-21.webp"
+    },
+    {
+      "id": "1769784231970",
+      "name": "#22",
+      "image": "textures/-22.webp"
+    },
+    {
+      "id": "1769784603015",
+      "name": "#23",
+      "image": "textures/-23.webp"
+    },
+    {
+      "id": "1769784861011",
+      "name": "#24",
+      "image": "textures/-24.webp"
+    },
+    {
+      "id": "1769785261946",
+      "name": "#25",
+      "image": "textures/-25.webp"
+    },
+    {
+      "id": "1769785854068",
+      "name": "#26",
+      "image": "textures/-26.webp"
+    },
+    {
+      "id": "1769786092979",
+      "name": "#27",
+      "image": "textures/-27.webp"
+    },
+    {
+      "id": "1769786267326",
+      "name": "#28",
+      "image": "textures/-28.webp"
+    },
+    {
+      "id": "1769786479659",
+      "name": "#29",
+      "image": "textures/-29.webp"
+    },
+    {
+      "id": "1769787708357",
+      "name": "#30",
+      "image": "textures/-30.webp"
+    },
+    {
+      "id": "1769787979230",
+      "name": "#31",
+      "image": "textures/-31.webp"
+    },
+    {
+      "id": "1769788189013",
+      "name": "#32",
+      "image": "textures/-32.webp"
+    },
+    {
+      "id": "1769788465703",
+      "name": "#33",
+      "image": "textures/-33.webp"
+    },
+    {
+      "id": "1769789034036",
+      "name": "#34",
+      "image": "textures/-34.webp"
+    },
+    {
+      "id": "1769790238703",
+      "name": "#35",
+      "image": "textures/-35.webp"
+    },
+    {
+      "id": "1769793630583",
+      "name": "#36",
+      "image": "textures/-36.webp"
+    },
+    {
+      "id": "1769828761504",
+      "name": "#37",
+      "image": "textures/-37.webp"
+    },
+    {
+      "id": "1769828982559",
+      "name": "#38",
+      "image": "textures/-38.webp"
+    },
+    {
+      "id": "1769829407833",
+      "name": "#39",
+      "image": "textures/-39.webp"
+    },
+    {
+      "id": "1769831015693",
+      "name": "#40",
+      "image": "textures/-40.webp"
+    },
+    {
+      "id": "1769831269423",
+      "name": "#41",
+      "image": "textures/-41.webp"
+    },
+    {
+      "id": "1769832389395",
+      "name": "#42",
+      "image": "textures/-42.webp"
+    },
+    {
+      "id": "1769832590214",
+      "name": "#43",
+      "image": "textures/-43.webp"
+    },
+    {
+      "id": "1769832986488",
+      "name": "#44",
+      "image": "textures/-44.webp"
+    },
+    {
+      "id": "1769834217715",
+      "name": "#45",
+      "image": "textures/-45.webp"
+    },
+    {
+      "id": "1769834382662",
+      "name": "#46",
+      "image": "textures/-46.webp"
+    },
+    {
+      "id": "1769835794022",
+      "name": "#47",
+      "image": "textures/-47.webp"
+    },
+    {
+      "id": "1769836329707",
+      "name": "#48",
+      "image": "textures/-48.webp"
+    }
+  ],
+  "modelImage": "images/model_base.png",
+  "earImage": "images/ear_overlay.png",
+  "backgroundImage": "backgrounds/background.jpg",
+  "position": {
+    "frontX": 37.46666666666666,
+    "frontY": 68.06666666666665,
+    "backX": 41.46666666666666,
+    "backY": 68.26666666666667
+  },
+  "backOffset": {
+    "x": 6,
+    "y": 5
+  },
+  "textureDisplaySize": 40,
+  "earEdgeOverlap": 8
+}

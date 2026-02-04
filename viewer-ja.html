@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>イヤリングをカスタマイズ</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    body.has-bg { background: url('backgrounds/background.jpg') center/cover fixed; }
+    
+    .container { max-width: 1000px; margin: 0 auto; }
+    
+    header {
+      text-align: center;
+      padding: 10px 0 12px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-main { flex: 1; }
+    header h1 { font-size: 1.1rem; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+    header p { opacity: 0.9; font-size: 0.75rem; margin-top: 2px; }
+    .lang-switch {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 15px;
+      text-decoration: none;
+      font-size: 0.7rem;
+    }
+    
+    /* Selection Summary - 4 parts sticky */
+    .selection-summary {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: white;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .selection-pair {
+      flex: 1;
+      min-width: 140px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .pair-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pair-title { font-size: 0.65rem; color: #888; font-weight: 600; }
+    .copy-btn {
+      padding: 3px 8px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      background: #f5f5f5;
+      color: #666;
+      font-size: 0.6rem;
+      cursor: pointer;
+    }
+    .selection-items { display: flex; gap: 4px; }
+    .selection-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid #eee;
+      background: #fafafa;
+      transition: all 0.2s;
+    }
+    .selection-item.active { border-color: #667eea; background: rgba(102,126,234,0.1); }
+    .selection-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ddd;
+      background-size: cover;
+      flex-shrink: 0;
+    }
+    .selection-dot.color-A { border: 2px solid #ff6b6b; }
+    .selection-dot.color-B { border: 2px solid #ffd93d; }
+    .selection-dot.color-C { border: 2px solid #6bcb77; }
+    .selection-dot.color-D { border: 2px solid #4d96ff; }
+    .selection-info { flex: 1; min-width: 0; }
+    .selection-label { font-size: 0.55rem; color: #888; }
+    .selection-name { font-size: 0.65rem; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    
+    .view-tabs {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .view-tab {
+      padding: 7px 14px;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 0.75rem;
+      cursor: pointer;
+      border: none;
+    }
+    .view-tab.active { background: white; color: #667eea; }
+    
+    .preview-section {
+      background: white;
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    .preview-container {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .preview-container.hidden { display: none !important; }
+    
+    .template-view { background: linear-gradient(180deg, #f0f0f0 0%, #d8d8d8 100%); aspect-ratio: 2/1; max-height: 220px; gap: 20px; }
+    .on-ear-view { background: #1a1a2a; aspect-ratio: 4/3; position: relative; }
+    .angled-view { background: linear-gradient(180deg, #c8c8c8 0%, #fff 50%, #c8c8c8 100%); aspect-ratio: 4/3; }
+    
+    #earCanvas, #angledCanvas { max-width: 100%; max-height: 100%; display: block; }
+    
+    .earring-display { position: relative; width: 80px; height: 130px; }
+    .ball {
+      position: absolute;
+      border-radius: 50%;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+    }
+    .ball::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(ellipse 50% 40% at 30% 25%, rgba(255,255,255,0.7) 0%, transparent 60%),
+                  radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,0,0,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .ball.selected { box-shadow: 0 0 0 3px rgba(102,126,234,0.6); }
+    .front-ball {
+      width: 30px; height: 30px;
+      top: 12px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      background-color: #e0e0e0;
+    }
+    .back-ball {
+      width: 48px; height: 48px;
+      bottom: 15px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      background-color: #d0d0d0;
+    }
+    .pin {
+      position: absolute;
+      width: 2px; height: 22px;
+      background: linear-gradient(to right, #999, #ccc, #999);
+      top: 42px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+    .pair-label {
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      color: #666;
+      font-weight: 600;
+    }
+    
+    .pair-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 8px 0;
+    }
+    .pair-toggle.hidden { display: none; }
+    .pair-toggle-btn {
+      padding: 5px 12px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      background: #f5f5f5;
+      color: #666;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+    .pair-toggle-btn.active { background: #667eea; border-color: #667eea; color: white; }
+    
+    .texture-section { margin-top: 10px; }
+    .texture-section h2 { font-size: 0.8rem; color: #666; margin-bottom: 8px; text-align: center; }
+    
+    .texture-carousel {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 8px 0;
+    }
+    .texture-carousel-inner {
+      display: flex;
+      gap: 10px;
+      padding: 0 8px;
+    }
+    .texture-item {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 8px;
+    }
+    .texture-item:active { transform: scale(0.95); }
+    .texture-circle {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      background-size: 115%;
+      background-position: center;
+    }
+    .texture-item.selected-A .texture-circle { border-color: #ff6b6b; }
+    .texture-item.selected-B .texture-circle { border-color: #ffd93d; }
+    .texture-item.selected-C .texture-circle { border-color: #6bcb77; }
+    .texture-item.selected-D .texture-circle { border-color: #4d96ff; }
+    .texture-name {
+      font-size: 0.55rem;
+      color: #666;
+      margin-top: 2px;
+      max-width: 55px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    /* Desktop */
+    @media (min-width: 600px) {
+      .selection-summary { flex-wrap: nowrap; }
+      .selection-pair { min-width: auto; }
+      .earring-display { width: 100px; height: 160px; }
+      .front-ball { width: 38px; height: 38px; top: 15px; }
+      .back-ball { width: 60px; height: 60px; bottom: 20px; }
+      .pin { height: 28px; top: 54px; }
+      .texture-circle { width: 40px; height: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-main">
+        <h1>イヤリングをカスタマイズ</h1>
+        <p>A・B・C・Dのテクスチャを選択</p>
+      </div>
+      <a href="viewer-en.html" class="lang-switch">English</a>
+    </header>
+    
+    <div class="selection-summary">
+      <div class="selection-pair">
+        <div class="pair-header">
+          <span class="pair-title">ペア1</span>
+        </div>
+        <div class="selection-items">
+          <div class="selection-item active" id="itemA" onclick="selectPart('A')">
+            <div class="selection-dot color-A" id="dotA"></div>
+            <div class="selection-info">
+              <div class="selection-label">A (小)</div>
+              <div class="selection-name" id="nameA">-</div>
+            </div>
+          </div>
+          <div class="selection-item" id="itemB" onclick="selectPart('B')">
+            <div class="selection-dot color-B" id="dotB"></div>
+            <div class="selection-info">
+              <div class="selection-label">B (大)</div>
+              <div class="selection-name" id="nameB">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="selection-pair">
+        <div class="pair-header">
+          <span class="pair-title">ペア2</span>
+          <button class="copy-btn" onclick="copyPair1ToPair2()">1→2コピー</button>
+        </div>
+        <div class="selection-items">
+          <div class="selection-item" id="itemC" onclick="selectPart('C')">
+            <div class="selection-dot color-C" id="dotC"></div>
+            <div class="selection-info">
+              <div class="selection-label">C (小)</div>
+              <div class="selection-name" id="nameC">-</div>
+            </div>
+          </div>
+          <div class="selection-item" id="itemD" onclick="selectPart('D')">
+            <div class="selection-dot color-D" id="dotD"></div>
+            <div class="selection-info">
+              <div class="selection-label">D (大)</div>
+              <div class="selection-name" id="nameD">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="view-tabs">
+      <button class="view-tab active" data-view="template">テンプレート</button>
+      <button class="view-tab" data-view="on-ear">着用イメージ</button>
+      <button class="view-tab" data-view="angled">斜めビュー</button>
+    </div>
+    
+    <div class="preview-section">
+      <div class="preview-container template-view" id="templateView">
+        <div class="earring-display">
+          <div class="ball front-ball" id="ballA" onclick="selectPart('A')"></div>
+          <div class="pin"></div>
+          <div class="ball back-ball" id="ballB" onclick="selectPart('B')"></div>
+          <div class="pair-label">ペア1</div>
+        </div>
+        <div class="earring-display">
+          <div class="ball front-ball" id="ballC" onclick="selectPart('C')"></div>
+          <div class="pin"></div>
+          <div class="ball back-ball" id="ballD" onclick="selectPart('D')"></div>
+          <div class="pair-label">ペア2</div>
+        </div>
+      </div>
+      
+      <div class="preview-container on-ear-view hidden" id="onEarView">
+        <canvas id="earCanvas"></canvas>
+      </div>
+      
+      <div class="preview-container angled-view hidden" id="angledView">
+        <canvas id="angledCanvas"></canvas>
+      </div>
+      
+      <div class="pair-toggle" id="pairToggle">
+        <button class="pair-toggle-btn active" data-pair="1" onclick="setEarPair(1)">ペア1 (A+B)</button>
+        <button class="pair-toggle-btn" data-pair="2" onclick="setEarPair(2)">ペア2 (C+D)</button>
+      </div>
+      
+      <div class="texture-section">
+        <h2>テクスチャを選択</h2>
+        <div class="texture-carousel">
+          <div class="texture-carousel-inner" id="textureCarousel"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const config = {"textures":[{"id":"1769519654738","name":"#1","image":"textures/-1.webp"},{"id":"1769519676496","name":"#2","image":"textures/-2.webp"},{"id":"1769519713744","name":"#3","image":"textures/-3.webp"},{"id":"1769519737002","name":"#4","image":"textures/-4.webp"},{"id":"1769519761612","name":"#5","image":"textures/-5.webp"},{"id":"1769519809262","name":"#6","image":"textures/-6.webp"},{"id":"1769521589941","name":"#7","image":"textures/-7.webp"},{"id":"1769523745999","name":"#8","image":"textures/-8.webp"},{"id":"1769523772226","name":"#9","image":"textures/-9.webp"},{"id":"1769524277509","name":"#10","image":"textures/-10.webp"},{"id":"1769770084012","name":"#11","image":"textures/-11.webp"},{"id":"1769770332497","name":"#12","image":"textures/-12.webp"},{"id":"1769771739367","name":"#13","image":"textures/-13.webp"},{"id":"1769771991709","name":"#14","image":"textures/-14.webp"},{"id":"1769772439613","name":"#15","image":"textures/-15.webp"},{"id":"1769781278569","name":"#16","image":"textures/-16.webp"},{"id":"1769782249303","name":"#17","image":"textures/-17.webp"},{"id":"1769782502525","name":"#18","image":"textures/-18.webp"},{"id":"1769783309138","name":"#19 (クリア)","image":"textures/-19------.webp"},{"id":"1769783613027","name":"#20","image":"textures/-20.webp"},{"id":"1769783870929","name":"#21","image":"textures/-21.webp"},{"id":"1769784231970","name":"#22","image":"textures/-22.webp"},{"id":"1769784603015","name":"#23","image":"textures/-23.webp"},{"id":"1769784861011","name":"#24","image":"textures/-24.webp"},{"id":"1769785261946","name":"#25","image":"textures/-25.webp"},{"id":"1769785854068","name":"#26","image":"textures/-26.webp"},{"id":"1769786092979","name":"#27","image":"textures/-27.webp"},{"id":"1769786267326","name":"#28","image":"textures/-28.webp"},{"id":"1769786479659","name":"#29","image":"textures/-29.webp"},{"id":"1769787708357","name":"#30","image":"textures/-30.webp"},{"id":"1769787979230","name":"#31","image":"textures/-31.webp"},{"id":"1769788189013","name":"#32","image":"textures/-32.webp"},{"id":"1769788465703","name":"#33","image":"textures/-33.webp"},{"id":"1769789034036","name":"#34","image":"textures/-34.webp"},{"id":"1769790238703","name":"#35","image":"textures/-35.webp"},{"id":"1769793630583","name":"#36","image":"textures/-36.webp"},{"id":"1769828761504","name":"#37","image":"textures/-37.webp"},{"id":"1769828982559","name":"#38","image":"textures/-38.webp"},{"id":"1769829407833","name":"#39","image":"textures/-39.webp"},{"id":"1769831015693","name":"#40","image":"textures/-40.webp"},{"id":"1769831269423","name":"#41","image":"textures/-41.webp"},{"id":"1769832389395","name":"#42","image":"textures/-42.webp"},{"id":"1769832590214","name":"#43","image":"textures/-43.webp"},{"id":"1769832986488","name":"#44","image":"textures/-44.webp"},{"id":"1769834217715","name":"#45","image":"textures/-45.webp"},{"id":"1769834382662","name":"#46","image":"textures/-46.webp"},{"id":"1769835794022","name":"#47","image":"textures/-47.webp"},{"id":"1769836329707","name":"#48","image":"textures/-48.webp"}],"modelImage":"images/model_base.png","earImage":"images/ear_overlay.png","backgroundImage":"backgrounds/background.jpg","position":{"frontX":37.46666666666666,"frontY":68.06666666666665,"backX":41.46666666666666,"backY":68.26666666666667},"backOffset":{"x":6,"y":5},"textureDisplaySize":40,"earEdgeOverlap":8};
+    let selectedPart = 'A';
+    let textureIds = { A: null, B: null, C: null, D: null };
+    let textureImgs = { A: null, B: null, C: null, D: null };
+    let currentEarPair = 1;
+    let modelImage = null, earImage = null;
+    let earCanvas, earCtx, angledCanvas, angledCtx;
+    let imagesLoaded = 0, imagesToLoad = 0;
+    
+    function init() {
+      if (config.backgroundImage) {
+        const bgImg = new Image();
+        bgImg.onload = () => document.body.classList.add('has-bg');
+        bgImg.src = config.backgroundImage;
+      }
+      renderTextures();
+      setupTabs();
+      initEarCanvas();
+      initAngledCanvas();
+      updatePairToggleVisibility();
+    }
+    
+    function renderTextures() {
+      const carousel = document.getElementById('textureCarousel');
+      carousel.innerHTML = '';
+      config.textures.forEach(t => {
+        const item = document.createElement('div');
+        item.className = 'texture-item';
+        item.setAttribute('data-id', t.id);
+        item.innerHTML = '<div class="texture-circle" style="background-image:url(' + t.image + ')"></div><div class="texture-name">' + t.name + '</div>';
+        item.onclick = () => applyTexture(t.id, t.image, t.name);
+        carousel.appendChild(item);
+      });
+    }
+    
+    function setupTabs() {
+      document.querySelectorAll('.view-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const view = tab.dataset.view;
+          document.getElementById('templateView').classList.toggle('hidden', view !== 'template');
+          document.getElementById('onEarView').classList.toggle('hidden', view !== 'on-ear');
+          document.getElementById('angledView').classList.toggle('hidden', view !== 'angled');
+          document.getElementById('pairToggle').classList.toggle('hidden', view === 'template' || view === 'angled');
+          if (view === 'on-ear') setTimeout(() => { resizeEarCanvas(); renderEarComposite(); }, 50);
+          if (view === 'angled') setTimeout(() => { resizeAngledCanvas(); renderAngledComposite(); }, 50);
+        });
+      });
+    }
+    
+    function selectPart(part) {
+      selectedPart = part;
+      ['A','B','C','D'].forEach(p => {
+        document.getElementById('item' + p).classList.toggle('active', p === part);
+        const ball = document.getElementById('ball' + p);
+        if (ball) ball.classList.toggle('selected', p === part);
+      });
+    }
+    
+    function copyPair1ToPair2() {
+      textureIds.C = textureIds.A;
+      textureIds.D = textureIds.B;
+      ['C','D'].forEach(p => {
+        const srcPart = p === 'C' ? 'A' : 'B';
+        if (textureIds[srcPart]) {
+          const tex = config.textures.find(t => t.id === textureIds[srcPart]);
+          if (tex) {
+            const img = new Image();
+            img.onload = () => { textureImgs[p] = img; renderEarComposite(); renderAngledComposite(); };
+            img.src = tex.image;
+            document.getElementById('name' + p).textContent = tex.name;
+          }
+        } else {
+          textureImgs[p] = null;
+          document.getElementById('name' + p).textContent = '-';
+        }
+      });
+      updatePreviews();
+      updatePairToggleVisibility();
+    }
+    
+    function arePairsIdentical() { return textureIds.A === textureIds.C && textureIds.B === textureIds.D; }
+    
+    function updatePairToggleVisibility() {
+      const toggle = document.getElementById('pairToggle');
+      toggle.classList.toggle('hidden', arePairsIdentical());
+    }
+    
+    function setEarPair(pair) {
+      currentEarPair = pair;
+      document.querySelectorAll('.pair-toggle-btn').forEach(btn => btn.classList.toggle('active', parseInt(btn.dataset.pair) === pair));
+      renderEarComposite();
+    }
+    
+    function applyTexture(id, imagePath, textureName) {
+      textureIds[selectedPart] = id;
+      const img = new Image();
+      img.onload = () => {
+        textureImgs[selectedPart] = img;
+        updatePreviews();
+        renderEarComposite();
+        renderAngledComposite();
+        updatePairToggleVisibility();
+      };
+      img.src = imagePath;
+      document.getElementById('name' + selectedPart).textContent = textureName;
+    }
+    
+    function updatePreviews() {
+      ['A','B','C','D'].forEach(p => {
+        const tex = config.textures.find(t => t.id === textureIds[p]);
+        const url = tex ? 'url(' + tex.image + ')' : 'none';
+        const ball = document.getElementById('ball' + p);
+        if (ball) ball.style.backgroundImage = url;
+        document.getElementById('dot' + p).style.backgroundImage = url;
+      });
+      document.querySelectorAll('.texture-item').forEach(item => {
+        const id = item.getAttribute('data-id');
+        item.classList.remove('selected-A','selected-B','selected-C','selected-D');
+        ['A','B','C','D'].forEach(p => { if (textureIds[p] === id) item.classList.add('selected-' + p); });
+      });
+    }
+    
+    function initEarCanvas() {
+      earCanvas = document.getElementById('earCanvas');
+      earCtx = earCanvas.getContext('2d');
+      if (config.modelImage) imagesToLoad++;
+      if (config.earImage) imagesToLoad++;
+      if (config.modelImage) { modelImage = new Image(); modelImage.onload = onImageLoaded; modelImage.src = config.modelImage; }
+      if (config.earImage) { earImage = new Image(); earImage.onload = onImageLoaded; earImage.src = config.earImage; }
+    }
+    
+    function onImageLoaded() { imagesLoaded++; if (imagesLoaded >= imagesToLoad) { resizeEarCanvas(); renderEarComposite(); } }
+    
+    function resizeEarCanvas() {
+      const baseImage = modelImage || earImage;
+      if (!baseImage) return;
+      const container = document.getElementById('onEarView');
+      const w = container.clientWidth || 400, h = container.clientHeight || 300;
+      const imgRatio = baseImage.width / baseImage.height;
+      const containerRatio = w / h;
+      let drawW, drawH;
+      if (imgRatio > containerRatio) { drawW = w; drawH = w / imgRatio; }
+      else { drawH = h; drawW = h * imgRatio; }
+      earCanvas.width = drawW;
+      earCanvas.height = drawH;
+    }
+    
+    function renderEarComposite() {
+      if (!earCtx || (!modelImage && !earImage)) return;
+      const w = earCanvas.width, h = earCanvas.height;
+      earCtx.clearRect(0, 0, w, h);
+      const pos = config.position;
+      const offset = config.backOffset || { x: 0, y: 6 };
+      const frontX = (pos.frontX / 100) * w, frontY = (pos.frontY / 100) * h;
+      const backX = frontX + (offset.x / 100) * w, backY = frontY + (offset.y / 100) * h;
+      const frontR = Math.min(w, h) * 0.041, backR = Math.min(w, h) * 0.065;
+      const frontTex = currentEarPair === 1 ? textureImgs.A : textureImgs.C;
+      const backTex = currentEarPair === 1 ? textureImgs.B : textureImgs.D;
+      
+      const bg = earCtx.createRadialGradient(w/2, h/2, 0, w/2, h/2, Math.max(w, h));
+      bg.addColorStop(0, '#2a2a3a'); bg.addColorStop(1, '#1a1a2a');
+      earCtx.fillStyle = bg; earCtx.fillRect(0, 0, w, h);
+      if (modelImage) earCtx.drawImage(modelImage, 0, 0, w, h);
+      drawBall(earCtx, backX, backY, backR, backTex, 'back');
+      if (earImage) {
+        const overlap = config.earEdgeOverlap || 0;
+        earCtx.drawImage(earImage, -overlap, -overlap, w + overlap * 2, h + overlap * 2);
+      }
+      drawPin(earCtx, frontX, frontY, backX, backY);
+      drawBall(earCtx, frontX, frontY, frontR, frontTex, 'front');
+    }
+    
+    function drawBall(ctx, x, y, r, tex, type) {
+      ctx.save();
+      ctx.translate(x, y);
+      if (type === 'back') ctx.scale(1, 0.95);
+      ctx.shadowColor = 'rgba(0,0,0,0.4)';
+      ctx.shadowBlur = type === 'front' ? 8 : 12;
+      ctx.shadowOffsetX = ctx.shadowOffsetY = type === 'front' ? 3 : 4;
+      ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2);
+      if (tex) { ctx.save(); ctx.clip(); ctx.drawImage(tex, -r, -r, r*2, r*2); ctx.restore(); }
+      else { ctx.fillStyle = type === 'front' ? '#e0e0e0' : '#d0d0d0'; ctx.fill(); }
+      ctx.shadowColor = 'transparent';
+      const hl = ctx.createRadialGradient(-r*0.35, -r*0.35, 0, -r*0.35, -r*0.35, r*1.2);
+      hl.addColorStop(0, 'rgba(255,255,255,0.6)'); hl.addColorStop(0.3, 'rgba(255,255,255,0.2)'); hl.addColorStop(1, 'transparent');
+      ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fillStyle = hl; ctx.fill();
+      ctx.restore();
+    }
+    
+    function drawPin(ctx, fx, fy, bx, by) {
+      const angle = Math.atan2(by - fy, bx - fx);
+      const length = Math.sqrt((bx-fx)**2 + (by-fy)**2);
+      ctx.save(); ctx.translate(fx, fy); ctx.rotate(angle);
+      const g = ctx.createLinearGradient(0, -1, 0, 1);
+      g.addColorStop(0, '#aaa'); g.addColorStop(0.5, '#ddd'); g.addColorStop(1, '#999');
+      ctx.fillStyle = g; ctx.fillRect(0, -1, length * 0.6, 2);
+      ctx.restore();
+    }
+    
+    function initAngledCanvas() {
+      angledCanvas = document.getElementById('angledCanvas');
+      angledCtx = angledCanvas.getContext('2d');
+      resizeAngledCanvas();
+      renderAngledComposite();
+    }
+    
+    function resizeAngledCanvas() {
+      const container = document.getElementById('angledView');
+      const displayW = container.clientWidth || 400, displayH = container.clientHeight || 300;
+      angledCanvas.width = displayW * 2; angledCanvas.height = displayH * 2;
+      angledCanvas.style.width = displayW + 'px'; angledCanvas.style.height = displayH + 'px';
+    }
+    
+    function renderAngledComposite() {
+      if (!angledCtx) return;
+      const w = angledCanvas.width, h = angledCanvas.height;
+      angledCtx.clearRect(0, 0, w, h);
+      const bgGrad = angledCtx.createLinearGradient(0, 0, 0, h);
+      bgGrad.addColorStop(0, '#c8c8c8'); bgGrad.addColorStop(0.3, '#f5f5f5');
+      bgGrad.addColorStop(0.5, '#fff'); bgGrad.addColorStop(0.7, '#f5f5f5'); bgGrad.addColorStop(1, '#c8c8c8');
+      angledCtx.fillStyle = bgGrad; angledCtx.fillRect(0, 0, w, h);
+      
+      const identical = arePairsIdentical();
+      if (identical) {
+        const backR = Math.min(w, h) * 0.12, frontR = backR / 1.6;
+        const angle = Math.PI / 6, dist = (frontR + backR) * 0.8;
+        const yOffset = Math.sin(angle) * dist * 0.5, bigBallY = h * 0.52;
+        drawAngledEarring(w * 0.3, bigBallY + yOffset, frontR, backR, 'front', textureImgs.A, textureImgs.B);
+        drawAngledEarring(w * 0.7, bigBallY - yOffset, frontR, backR, 'back', textureImgs.A, textureImgs.B);
+      } else {
+        const backR = Math.min(w, h) * 0.09, frontR = backR / 1.6;
+        const angle = Math.PI / 6, dist = (frontR + backR) * 0.8;
+        const yOffset = Math.sin(angle) * dist * 0.5;
+        const pair1Y = h * 0.35, pair2Y = h * 0.68;
+        drawAngledEarring(w * 0.3, pair1Y + yOffset, frontR, backR, 'front', textureImgs.A, textureImgs.B);
+        drawAngledEarring(w * 0.7, pair1Y - yOffset, frontR, backR, 'back', textureImgs.A, textureImgs.B);
+        drawAngledEarring(w * 0.3, pair2Y + yOffset, frontR, backR, 'front', textureImgs.C, textureImgs.D);
+        drawAngledEarring(w * 0.7, pair2Y - yOffset, frontR, backR, 'back', textureImgs.C, textureImgs.D);
+        angledCtx.font = 'bold ' + (w * 0.025) + 'px sans-serif';
+        angledCtx.fillStyle = '#888'; angledCtx.textAlign = 'center';
+        angledCtx.fillText('ペア1', w * 0.5, pair1Y - backR * 1.5);
+        angledCtx.fillText('ペア2', w * 0.5, pair2Y - backR * 1.5);
+      }
+    }
+    
+    function drawAngledEarring(cx, cy, frontR, backR, viewType, frontTex, backTex) {
+      const angle = Math.PI / 6, dist = (frontR + backR) * 0.8;
+      const frontBallX = cx - Math.cos(angle) * dist * 0.4, frontBallY = cy + Math.sin(angle) * dist * 0.5;
+      const backBallX = cx + Math.cos(angle) * dist * 0.4, backBallY = cy - Math.sin(angle) * dist * 0.5;
+      let smallX, smallY, bigX, bigY, drawSmallLast;
+      if (viewType === 'front') { smallX = frontBallX; smallY = frontBallY; bigX = backBallX; bigY = backBallY; drawSmallLast = true; }
+      else { bigX = frontBallX; bigY = frontBallY; smallX = backBallX; smallY = backBallY; drawSmallLast = false; }
+      
+      angledCtx.save();
+      angledCtx.beginPath(); angledCtx.moveTo(smallX, smallY); angledCtx.lineTo(bigX, bigY);
+      angledCtx.strokeStyle = '#bbb'; angledCtx.lineWidth = 2; angledCtx.stroke();
+      angledCtx.restore();
+      
+      if (drawSmallLast) { drawAngledBall(bigX, bigY, backR, backTex); drawAngledBall(smallX, smallY, frontR, frontTex); }
+      else { drawAngledBall(smallX, smallY, frontR, frontTex); drawAngledBall(bigX, bigY, backR, backTex); }
+    }
+    
+    function drawAngledBall(x, y, r, tex) {
+      angledCtx.save();
+      angledCtx.shadowColor = 'rgba(0,0,0,0.25)'; angledCtx.shadowBlur = r * 0.4;
+      angledCtx.shadowOffsetX = angledCtx.shadowOffsetY = r * 0.15;
+      angledCtx.beginPath(); angledCtx.arc(x, y, r, 0, Math.PI * 2);
+      if (tex) { angledCtx.save(); angledCtx.clip(); angledCtx.drawImage(tex, x-r, y-r, r*2, r*2); angledCtx.restore(); }
+      else { angledCtx.fillStyle = '#e0e0e0'; angledCtx.fill(); }
+      angledCtx.shadowColor = 'transparent';
+      const hl = angledCtx.createRadialGradient(x - r*0.35, y - r*0.35, 0, x - r*0.35, y - r*0.35, r*1.2);
+      hl.addColorStop(0, 'rgba(255,255,255,0.7)'); hl.addColorStop(0.3, 'rgba(255,255,255,0.3)'); hl.addColorStop(1, 'transparent');
+      angledCtx.beginPath(); angledCtx.arc(x, y, r, 0, Math.PI * 2); angledCtx.fillStyle = hl; angledCtx.fill();
+      angledCtx.restore();
+    }
+    
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
