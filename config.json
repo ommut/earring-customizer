@@ -246,12 +246,12 @@
   "backgroundImage": "backgrounds/background.jpg",
   "bannerImage": "images/banner.png",
   "position": {
-    "frontX": 38.3636427815037,
-    "frontY": 68.27843981709069
+    "frontX": 37.3636427815037,
+    "frontY": 82.67843981709068
   },
   "backOffset": {
-    "x": 4.399999999999999,
-    "y": 9.079999999999998
+    "x": 6,
+    "y": 7
   },
   "ballSizeScale": {
     "front": 150,
@@ -276,6 +276,12 @@
     "projectId": "earring-customizer",
     "databaseUrl": "https://earring-customizer-default-rtdb.asia-southeast1.firebasedatabase.app"
   },
-  "rankTopN": 10,
-  "showVisitCounter": true
+  "rankTopN": 5,
+  "showVisitCounter": true,
+  "seo": {
+    "metaDescJa": "muta clay - あなただけのイヤリングを作ろう。色を自由に組み合わせてカスタマイズ",
+    "metaDescEn": "muta clay - Design your own earrings. Mix and match colors to create your perfect pair",
+    "themeColor": "#e7b9cc",
+    "ogSiteName": "muta clay"
+  }
 }
