@@ -246,12 +246,12 @@
   "backgroundImage": "backgrounds/background.jpg",
   "bannerImage": "images/banner.png",
   "position": {
-    "frontX": 35.56364278150369,
-    "frontY": 72.11843981709067
+    "frontX": 38.7636427815037,
+    "frontY": 68.43843981709068
   },
   "backOffset": {
-    "x": 4.3999999999999915,
-    "y": 7.160000000000011
+    "x": 4.799999999999997,
+    "y": 8.599999999999994
   },
   "ballSizeScale": {
     "front": 150,
@@ -259,12 +259,12 @@
   },
   "imageTransform": {
     "model": {
-      "scale": 124,
+      "scale": 100,
       "offsetX": 0,
       "offsetY": 0
     },
     "ear": {
-      "scale": 125,
+      "scale": 100,
       "offsetX": 0,
       "offsetY": 0
     }
