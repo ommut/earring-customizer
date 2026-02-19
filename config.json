@@ -243,15 +243,15 @@
   ],
   "modelImage": "images/model_base.png",
   "earImage": "images/ear_overlay.png",
-  "backgroundImage": null,
+  "backgroundImage": "backgrounds/background.jpg",
   "bannerImage": "images/banner.png",
   "position": {
-    "frontX": 37.3636427815037,
-    "frontY": 82.67843981709068
+    "frontX": 35.56364278150369,
+    "frontY": 72.11843981709067
   },
   "backOffset": {
-    "x": 6,
-    "y": 7
+    "x": 4.3999999999999915,
+    "y": 7.160000000000011
   },
   "ballSizeScale": {
     "front": 150,
@@ -259,12 +259,12 @@
   },
   "imageTransform": {
     "model": {
-      "scale": 100,
+      "scale": 124,
       "offsetX": 0,
       "offsetY": 0
     },
     "ear": {
-      "scale": 100,
+      "scale": 125,
       "offsetX": 0,
       "offsetY": 0
     }
@@ -276,6 +276,6 @@
     "projectId": "earring-customizer",
     "databaseUrl": "https://earring-customizer-default-rtdb.asia-southeast1.firebasedatabase.app"
   },
-  "rankTopN": 5,
+  "rankTopN": 10,
   "showVisitCounter": true
 }
