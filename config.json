@@ -246,12 +246,12 @@
   "backgroundImage": "backgrounds/background.jpg",
   "bannerImage": "images/banner.png",
   "position": {
-    "frontX": 38.36364278150371,
-    "frontY": 67.95843981709068
+    "frontX": 37.3636427815037,
+    "frontY": 82.67843981709068
   },
   "backOffset": {
-    "x": 5.800000000000004,
-    "y": 8.600000000000009
+    "x": 6,
+    "y": 7
   },
   "ballSizeScale": {
     "front": 150,
@@ -276,6 +276,6 @@
     "projectId": "earring-customizer",
     "databaseUrl": "https://earring-customizer-default-rtdb.asia-southeast1.firebasedatabase.app"
   },
-  "rankTopN": 5,
+  "rankTopN": 10,
   "showVisitCounter": true
 }
