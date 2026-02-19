@@ -246,12 +246,12 @@
   "backgroundImage": "backgrounds/background.jpg",
   "bannerImage": "images/banner.png",
   "position": {
-    "frontX": 37.3636427815037,
-    "frontY": 82.67843981709068
+    "frontX": 38.3636427815037,
+    "frontY": 68.27843981709069
   },
   "backOffset": {
-    "x": 6,
-    "y": 7
+    "x": 4.399999999999999,
+    "y": 9.079999999999998
   },
   "ballSizeScale": {
     "front": 150,
