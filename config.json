@@ -246,12 +246,12 @@
   "backgroundImage": "backgrounds/background.jpg",
   "bannerImage": "images/banner.png",
   "position": {
-    "frontX": 39.563642781503695,
-    "frontY": 67.63843981709066
+    "frontX": 38.3636427815037,
+    "frontY": 68.27843981709067
   },
   "backOffset": {
-    "x": 4.000000000000007,
-    "y": 10.36
+    "x": 4.199999999999996,
+    "y": 8.920000000000002
   },
   "ballSizeScale": {
     "front": 150,
@@ -279,9 +279,29 @@
   "rankTopN": 10,
   "showVisitCounter": true,
   "seo": {
-    "metaDescJa": "Muta Clay - あなただけのイヤリングを作ろう。色を自由に組み合わせてカスタマイズ",
-    "metaDescEn": "Muta Clay - Design your own earrings. Mix and match colors to create your perfect pair",
-    "themeColor": "#e8bed0",
-    "ogSiteName": "Muta Clay"
+    "metaDescJa": "muta clay - あなただけのイヤリングを作ろう。色を自由に組み合わせてカスタマイズ",
+    "metaDescEn": "muta clay - Design your own earrings. Mix and match colors to create your perfect pair",
+    "themeColor": "#e7bbce",
+    "ogSiteName": "muta clay"
+  },
+  "angled": {
+    "scale": 140,
+    "bgType": "color",
+    "bgColor": "#ffffff",
+    "bgImage": null,
+    "textSize": 3,
+    "label1": {
+      "x": 49,
+      "y": 12.084821428571429
+    },
+    "label2": {
+      "x": 51.800000000000004,
+      "y": 90.65625
+    }
+  },
+  "pageBg": {
+    "type": "gradient",
+    "color": "#667eea",
+    "image": null
   }
 }
