@@ -239,6 +239,36 @@
       "id": "1769836329707",
       "name": "#48",
       "image": "textures/-48.webp"
+    },
+    {
+      "id": "1776954620454",
+      "name": "#49 ネオン",
+      "image": "textures/-49----.webp"
+    },
+    {
+      "id": "1776954655547",
+      "name": "#50 ネオン",
+      "image": "textures/-50----.webp"
+    },
+    {
+      "id": "1776954711701",
+      "name": "#51 ネオン",
+      "image": "textures/-51----.webp"
+    },
+    {
+      "id": "1776954738593",
+      "name": "#52 ネオン",
+      "image": "textures/-52----.webp"
+    },
+    {
+      "id": "1776954877640",
+      "name": "#53 ネオン",
+      "image": "textures/-53----.webp"
+    },
+    {
+      "id": "1776954908393",
+      "name": "#54 ネオン",
+      "image": "textures/-54----.webp"
     }
   ],
   "modelImage": "images/model_base.png",
@@ -246,12 +276,12 @@
   "backgroundImage": "backgrounds/background.jpg",
   "bannerImage": "images/banner.png",
   "position": {
-    "frontX": 38.36364278150369,
-    "frontY": 68.2784398170907
+    "frontX": 37.3636427815037,
+    "frontY": 82.67843981709068
   },
   "backOffset": {
-    "x": 4.200000000000003,
-    "y": 9.719999999999999
+    "x": 6,
+    "y": 7
   },
   "ballSizeScale": {
     "front": 150,
@@ -276,23 +306,23 @@
     "projectId": "earring-customizer",
     "databaseUrl": "https://earring-customizer-default-rtdb.asia-southeast1.firebasedatabase.app"
   },
-  "rankTopN": 10,
+  "rankTopN": 5,
   "showVisitCounter": true,
   "seo": {
     "metaDescJa": "muta clay - あなただけのイヤリングを作ろう。色を自由に組み合わせてカスタマイズ",
     "metaDescEn": "muta clay - Design your own earrings. Mix and match colors to create your perfect pair",
-    "themeColor": "#f5a3d7",
-    "ogSiteName": "Muta Clay"
+    "themeColor": "#667eea",
+    "ogSiteName": "muta clay"
   },
   "angled": {
-    "scale": 140,
+    "scale": 124,
     "bgType": "color",
     "bgColor": "#ffffff",
     "bgImage": null,
-    "textSize": 3,
+    "textSize": 2,
     "label1": {
-      "x": 48.4,
-      "y": 12
+      "x": 50,
+      "y": 90
     },
     "label2": {
       "x": 50,
