@@ -6,6 +6,6 @@ Customer-facing earring texture customization tool.
 - English version: viewer-en.html
 - Japanese version: viewer-ja.html
 
-Last updated: 2025-02-16
+Last updated: 2026-09-10
 
 Design by OMMU
