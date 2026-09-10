@@ -1,0 +1,331 @@
+{
+  "textures": [
+    {
+      "id": "1788963022349",
+      "name": "#1",
+      "image": "textures/-1.webp"
+    },
+    {
+      "id": "1788963048881",
+      "name": "#2",
+      "image": "textures/-2.webp"
+    },
+    {
+      "id": "1788963087360",
+      "name": "#3",
+      "image": "textures/-3.webp"
+    },
+    {
+      "id": "1788968047639",
+      "name": "#4",
+      "image": "textures/-4.webp"
+    },
+    {
+      "id": "1788968059796",
+      "name": "#5",
+      "image": "textures/-5.webp"
+    },
+    {
+      "id": "1788968077431",
+      "name": "#6",
+      "image": "textures/-6.webp"
+    },
+    {
+      "id": "1788968092057",
+      "name": "#7",
+      "image": "textures/-7.webp"
+    },
+    {
+      "id": "1788968102902",
+      "name": "#8",
+      "image": "textures/-8.webp"
+    },
+    {
+      "id": "1788968115679",
+      "name": "#9",
+      "image": "textures/-9.webp"
+    },
+    {
+      "id": "1788968128424",
+      "name": "#10",
+      "image": "textures/-10.webp"
+    },
+    {
+      "id": "1788968141927",
+      "name": "#11",
+      "image": "textures/-11.webp"
+    },
+    {
+      "id": "1788968156939",
+      "name": "#12",
+      "image": "textures/-12.webp"
+    },
+    {
+      "id": "1788968168822",
+      "name": "#13",
+      "image": "textures/-13.webp"
+    },
+    {
+      "id": "1788968181397",
+      "name": "#14",
+      "image": "textures/-14.webp"
+    },
+    {
+      "id": "1788968192599",
+      "name": "#15",
+      "image": "textures/-15.webp"
+    },
+    {
+      "id": "1788968203142",
+      "name": "#16",
+      "image": "textures/-16.webp"
+    },
+    {
+      "id": "1788968213948",
+      "name": "#17",
+      "image": "textures/-17.webp"
+    },
+    {
+      "id": "1788969438385",
+      "name": "#18",
+      "image": "textures/-18.webp"
+    },
+    {
+      "id": "1788969455492",
+      "name": "#19",
+      "image": "textures/-19.webp"
+    },
+    {
+      "id": "1788969538712",
+      "name": "#20",
+      "image": "textures/-20.webp"
+    },
+    {
+      "id": "1788970045808",
+      "name": "#21",
+      "image": "textures/-21.webp"
+    },
+    {
+      "id": "1788970059838",
+      "name": "#22",
+      "image": "textures/-22.webp"
+    },
+    {
+      "id": "1788970072521",
+      "name": "#23",
+      "image": "textures/-23.webp"
+    },
+    {
+      "id": "1788970759250",
+      "name": "#24",
+      "image": "textures/-24.webp"
+    },
+    {
+      "id": "1788970775555",
+      "name": "#25",
+      "image": "textures/-25.webp"
+    },
+    {
+      "id": "1788970794022",
+      "name": "#26",
+      "image": "textures/-26.webp"
+    },
+    {
+      "id": "1788971088854",
+      "name": "#27",
+      "image": "textures/-27.webp"
+    },
+    {
+      "id": "1788972748858",
+      "name": "#28",
+      "image": "textures/-28.webp"
+    },
+    {
+      "id": "1788972759051",
+      "name": "#29",
+      "image": "textures/-29.webp"
+    },
+    {
+      "id": "1788972814780",
+      "name": "#30",
+      "image": "textures/-30.webp"
+    },
+    {
+      "id": "1788972839368",
+      "name": "#31",
+      "image": "textures/-31.webp"
+    },
+    {
+      "id": "1788972908181",
+      "name": "#32",
+      "image": "textures/-32.webp"
+    },
+    {
+      "id": "1789027410481",
+      "name": "#33",
+      "image": "textures/-33.webp"
+    },
+    {
+      "id": "1789027693221",
+      "name": "#34",
+      "image": "textures/-34.webp"
+    },
+    {
+      "id": "1789027750237",
+      "name": "#35",
+      "image": "textures/-35.webp"
+    },
+    {
+      "id": "1789027820346",
+      "name": "#36",
+      "image": "textures/-36.webp"
+    },
+    {
+      "id": "1789027868983",
+      "name": "#37",
+      "image": "textures/-37.webp"
+    },
+    {
+      "id": "1789027918066",
+      "name": "#38",
+      "image": "textures/-38.webp"
+    },
+    {
+      "id": "1789027963935",
+      "name": "#39",
+      "image": "textures/-39.webp"
+    },
+    {
+      "id": "1789028133202",
+      "name": "#40",
+      "image": "textures/-40.webp"
+    },
+    {
+      "id": "1789028233373",
+      "name": "#41",
+      "image": "textures/-41.webp"
+    },
+    {
+      "id": "1789028318909",
+      "name": "#42",
+      "image": "textures/-42.webp"
+    },
+    {
+      "id": "1789028402235",
+      "name": "#43",
+      "image": "textures/-43.webp"
+    },
+    {
+      "id": "1789028462302",
+      "name": "#44",
+      "image": "textures/-44.webp"
+    },
+    {
+      "id": "1789028541584",
+      "name": "#45",
+      "image": "textures/-45.webp"
+    },
+    {
+      "id": "1789028600286",
+      "name": "#46",
+      "image": "textures/-46.webp"
+    },
+    {
+      "id": "1789028668454",
+      "name": "#47",
+      "image": "textures/-47.webp"
+    },
+    {
+      "id": "1789039277151",
+      "name": "#48",
+      "image": "textures/-48.webp"
+    },
+    {
+      "id": "1789039351090",
+      "name": "#49",
+      "image": "textures/-49.webp"
+    }
+  ],
+  "modelImage": "images/model_base.png",
+  "earImage": "images/ear_overlay.png",
+  "backgroundImage": null,
+  "bannerImage": "images/banner.png",
+  "bannerVideo": true,
+  "theme": {
+    "bg": "#000000",
+    "prev": "#ffffff",
+    "surf": "#274076",
+    "surf2": "#31508D",
+    "line": "#4266A6",
+    "txt": "#EDF2FC",
+    "txt2": "#B6C6E2",
+    "txt3": "#8FA3C4",
+    "acc": "#FFD166",
+    "accTxt": "#2E2100",
+    "acc2": "#9BC4FF",
+    "acc2Txt": "#132A52",
+    "sA": "#FFD166",
+    "sB": "#FF9BB4",
+    "sC": "#8DF0CE",
+    "sD": "#D6B4FF"
+  },
+  "position": {
+    "frontX": 37.9636427815037,
+    "frontY": 67.20080982918257
+  },
+  "backOffset": {
+    "x": 6,
+    "y": 7
+  },
+  "ballSizeScale": {
+    "front": 150,
+    "back": 140
+  },
+  "imageTransform": {
+    "model": {
+      "scale": 100,
+      "offsetX": 0,
+      "offsetY": 0
+    },
+    "ear": {
+      "scale": 100,
+      "offsetX": 0,
+      "offsetY": 0
+    }
+  },
+  "textureDisplaySize": 50,
+  "earEdgeOverlap": 8,
+  "firebaseConfig": {
+    "apiKey": "AIzaSyBdcxpkBoDjDR0DSrIazxQGiNQp0kj-mWg",
+    "projectId": "earring-customizer",
+    "databaseUrl": "https://earring-customizer-default-rtdb.asia-southeast1.firebasedatabase.app"
+  },
+  "rankTopN": 5,
+  "showVisitCounter": true,
+  "seo": {
+    "metaDescJa": "muta clay - あなただけのイヤリングを作ろう。色を自由に組み合わせてカスタマイズ",
+    "metaDescEn": "muta clay - Design your own earrings. Mix and match colors to create your perfect pair",
+    "themeColor": "#000000",
+    "ogSiteName": "muta clay"
+  },
+  "angled": {
+    "scale": 129,
+    "bgType": "color",
+    "bgColor": "#ffffff",
+    "bgImage": null,
+    "textSize": 2,
+    "label1": {
+      "x": 50,
+      "y": 53
+    },
+    "label2": {
+      "x": 50,
+      "y": 88
+    }
+  },
+  "pageBg": {
+    "type": "gradient",
+    "color": "#667eea",
+    "image": null
+  }
+}
