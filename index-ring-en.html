@@ -18,7 +18,7 @@ body{font-family:var(--font-ui);min-height:100vh;padding:16px 12px 28px;backgrou
 header{text-align:center;padding:6px 0 10px;position:relative}
 header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
 .lang-switch{position:absolute;right:0;top:50%;transform:translateY(-50%);color:var(--txt2);padding:6px 12px;border-radius:999px;text-decoration:none;font-size:.7rem;border:1px solid var(--line)}
-.nav{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
 .nav a{color:var(--txt2);font-size:.72rem;text-decoration:none;padding:8px 2px}
 .sel-sum{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 2px;margin-bottom:14px;display:flex;gap:6px}
 .sel-item{flex:1;display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;cursor:pointer;border:1px solid var(--line);background:var(--surf);font-family:inherit;color:inherit;text-align:left}
@@ -66,11 +66,11 @@ header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
 .rtn{flex:1;min-width:0;font-size:.75rem;color:var(--txt)}
 .rc{font-size:.62rem;color:var(--txt3);flex-shrink:0}
 .remp{text-align:center;color:var(--txt3);font-size:.78rem;padding:20px}
-.vcnt{text-align:center;padding:14px;color:var(--txt3);font-size:.72rem;margin-top:8px}
+.ilink{display:inline-flex;align-items:center;gap:6px;color:var(--txt);border:1px solid var(--line);border-radius:999px;padding:6px 12px!important}.icnt{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--acc);color:var(--acc-txt);font-size:.62rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center}.save-btn{display:block;width:100%;margin-top:12px;padding:13px;border-radius:999px;border:0;background:var(--acc);color:var(--acc-txt);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit}.save-btn:active{transform:scale(.98)}.xlink{display:block;text-align:center;margin-top:14px;color:var(--txt2);font-size:.75rem;text-decoration:none}.vcnt{text-align:center;padding:14px;color:var(--txt3);font-size:.72rem;margin-top:8px}
 </style></head>
 <body><div class="container">
 <div class="banner"><video src="images/banner.mp4" poster="images/banner.png" autoplay muted loop playsinline preload="metadata"></video></div>
-<div class="nav"><a href="index-new-en.html">‹ Menu</a><a href="index-earring-en.html">Design earrings too ›</a></div>
+<div class="nav"><a href="index-new-en.html">‹ Menu</a><a class="ilink" href="idea-list-en.html">Idea list <span class="icnt" data-idea-count>0</span></a></div>
 <header><p>Choose two colors: small and large</p><a href="index-ring.html" class="lang-switch">日本語</a></header>
 <div class="sel-sum">
 <button class="sel-item active" id="iS" onclick="selectSlot('S')"><div class="sel-dot" id="dS"></div><div class="sel-info"><div class="sel-lbl">Small</div><div class="sel-nm" id="nS">-</div></div></button>
@@ -81,10 +81,10 @@ header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
 <div class="tsec"><h2>Select Texture</h2><div class="tcar"><div class="tcar-in" id="tCar"></div></div>
 <div class="pnote">No.1–36 BASIC COLOR: no extra charge<br><b>No.37–49 PREMIUM COLOR</b> <span class="pb">P</span>: extra charge per spot</div>
 <div class="psum" id="pSum"></div>
-<div class="action-btns"><button class="action-btn random-btn" onclick="randomize()">random</button><button class="action-btn share-btn" onclick="share()">📷 Share</button></div></div>
+<div class="action-btns"><button class="action-btn random-btn" onclick="randomize()">random</button><button class="action-btn share-btn" onclick="share()">📷 Share</button></div><button class="save-btn" onclick="ideaSaveR()">+ Save to idea list</button><a class="xlink" href="index-earring-en.html">Design earrings too ›</a></div>
 <div class="rsec hidden" id="rSec"><h2>Popular Combinations</h2><div id="rCnt"><div class="remp">Loading...</div></div></div>
 <div class="vcnt" id="vCnt"></div></div>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="idea.js"></script><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
 // Texts that differ between the Japanese and English page
 const TXT={small:'S',large:'L',premiumSum:n=>'PREMIUM × '+n,noData:'No data yet',times:' views',visits:' times customized'};
@@ -117,7 +117,7 @@ function init(){
   }));
   Object.keys(VIEWS).forEach(k=>{const im=new Image();im.onload=()=>{handImg[k]=im;draw();};im.src=VIEWS[k].img;});
   window.addEventListener('resize',draw);
-  fetch('config.json').then(r=>r.json()).then(cfg=>{C=cfg;renderTextures();initFirebase();}).catch(e=>console.error('config.json',e));
+  fetch('config.json').then(r=>r.json()).then(cfg=>{C=cfg;renderTextures();initFirebase();ideaLoadR();}).catch(e=>console.error('config.json',e));
   draw();
 }
 
@@ -147,13 +147,13 @@ function selectSlot(s){
   document.getElementById('iL').classList.toggle('active',s==='L');
 }
 
-function applyTexture(s,t){
+function applyTexture(s,t,noTrack){
   picked[s]=t.id;
   const im=new Image();
   im.onload=()=>{if(picked[s]===t.id){texImg[s]=im;draw();}};
   im.src=t.image;
   updateSelection();
-  track();
+  if(!noTrack)track();
 }
 
 function updateSelection(){
@@ -263,5 +263,8 @@ function countVisit(){
   if(!sessionStorage.getItem('rvc')){db.ref('stats/ringVisits').transaction(c=>(c||0)+1).catch(()=>{});sessionStorage.setItem('rvc','1');}
   db.ref('stats/ringVisits').once('value').then(s=>{const v=s.val()||0;document.getElementById('vCnt').textContent=String.fromCodePoint(0x1F380)+' '+v.toLocaleString()+TXT.visits;}).catch(()=>{});
 }
+function ideaSaveR(){Idea.save('ring',{S:picked.S,L:picked.L});}
+// open a saved idea: index-ring.html?r=S,L (texture ids). Not counted in the popular ranking.
+function ideaLoadR(){const q=Idea.param('r');if(!q)return;const ids=q.split(',');['S','L'].forEach((s,i)=>{const t=texById(ids[i]);if(t)applyTexture(s,t,true);});}
 document.addEventListener('DOMContentLoaded',init);
 </script></body></html>
