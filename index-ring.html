@@ -113,6 +113,8 @@ const tracked=new Set();
 function init(){
   cv=document.getElementById('ringCanvas');cx=cv.getContext('2d');
   cv.addEventListener('click',tapSphere);
+  cv.addEventListener('pointermove',hoverSphere);
+  cv.addEventListener('pointerleave',leaveCanvas);
   document.querySelectorAll('.vtab').forEach(tab=>tab.addEventListener('click',()=>{
     view=tab.dataset.view;
     document.querySelectorAll('.vtab').forEach(t=>t.classList.toggle('active',t===tab));
@@ -201,24 +203,42 @@ function draw(){
   }
 }
 // tap on a sphere in the photo selects its slot (generous hit area for fingers)
-function tapSphere(e){
+// which sphere is under the pointer; limit = how many radii away still counts
+function sphereAt(e,limit){
   const rect=cv.getBoundingClientRect();
   const px=(e.clientX-rect.left)/rect.width*100,py=(e.clientY-rect.top)/rect.height*100;
   let best=null,bestD=Infinity;
   ['S','L'].forEach(s=>{const p=VIEWS[view][s],d=Math.hypot(px-p.x,py-p.y)/p.r;if(d<bestD){bestD=d;best=s;}});
-  if(best&&bestD<1.8)selectSlot(best);
-  else hideMarkerNow();   // tap on an empty spot clears the outline
+  return bestD<limit?best:null;
 }
+function tapSphere(e){
+  const s=sphereAt(e,1.8);   // generous area for fingers
+  if(s)selectSlot(s);
+  else hideMarkerNow();      // tap on an empty spot clears the outline
+}
+// mouse over the active sphere shows the outline again; moving away fades it
+let hoverOn=false;
+function hoverSphere(e){
+  if(e.pointerType!=='mouse')return;
+  const over=sphereAt(e,1.15)===slot;
+  if(over&&!hoverOn){hoverOn=true;stopMarker();markerAlpha=1;draw();}
+  else if(!over&&hoverOn){hoverOn=false;fadeMarker(0);}
+}
+function leaveCanvas(){if(hoverOn){hoverOn=false;fadeMarker(0);}}
 function stopMarker(){clearTimeout(markerTimer);cancelAnimationFrame(markerRAF);}
+function fadeMarker(delay){
+  stopMarker();
+  markerTimer=setTimeout(()=>{
+    const start=performance.now(),from=markerAlpha;
+    const step=t=>{markerAlpha=Math.max(0,from*(1-(t-start)/500));draw();if(markerAlpha>0)markerRAF=requestAnimationFrame(step);};
+    markerRAF=requestAnimationFrame(step);
+  },delay);
+}
 function flashMarker(){
   stopMarker();markerAlpha=1;draw();
-  markerTimer=setTimeout(()=>{
-    const start=performance.now();
-    const step=t=>{markerAlpha=Math.max(0,1-(t-start)/500);draw();if(markerAlpha>0)markerRAF=requestAnimationFrame(step);};
-    markerRAF=requestAnimationFrame(step);
-  },1500);
+  if(!hoverOn)fadeMarker(1500);
 }
-function hideMarkerNow(){stopMarker();markerAlpha=0;draw();}
+function hideMarkerNow(){stopMarker();hoverOn=false;markerAlpha=0;draw();}
 function drawSphere(p,tex,size){
   const x=p.x/100*size,y=p.y/100*size,r=p.r/100*size;
   cx.save();
