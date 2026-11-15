@@ -96,7 +96,7 @@ const PREMIUM={from:37,fee:null};
 // Large sphere is on the thumb side, small sphere towards the middle finger.
 const VIEWS={
   top:{img:'images/ring-hand-top.jpg',S:{x:49.7,y:46.7,r:3.75},L:{x:62.1,y:46.9,r:6}},
-  angle:{img:'images/ring-hand-angle.jpg',S:{x:47.2,y:36.6,r:5.3},L:{x:30,y:35,r:8.5}}
+  angle:{img:'images/ring-hand-angle.jpg',S:{x:47.2,y:37.3,r:4.25},L:{x:30,y:36.2,r:6.8}}
 };
 
 let C=null;                      // shared config.json (colour catalogue, Firebase settings)
@@ -199,7 +199,7 @@ function drawSphere(p,tex,size){
   cx.beginPath();cx.arc(x,y,r*.96,0,Math.PI*2);cx.fillStyle='#c9ccd1';cx.fill();
   cx.shadowColor='transparent';
   cx.beginPath();cx.arc(x,y,r,0,Math.PI*2);
-  if(tex){cx.save();cx.clip();cx.drawImage(tex,x-r,y-r,r*2,r*2);cx.restore();}
+  if(tex){cx.save();cx.clip();cx.drawImage(tex,x-r*1.15,y-r*1.15,r*2.3,r*2.3);cx.restore();}
   else{cx.fillStyle='#c9ccd1';cx.fill();}
   const hl=cx.createRadialGradient(x-r*.35,y-r*.35,0,x-r*.35,y-r*.35,r*1.2);
   hl.addColorStop(0,'rgba(255,255,255,.6)');hl.addColorStop(.3,'rgba(255,255,255,.2)');hl.addColorStop(1,'transparent');
