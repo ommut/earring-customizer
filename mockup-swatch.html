@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>MOCKUP - カラー選択</title>
+<meta name="description" content="muta clay - あなただけのコロンリンを作ろう。色を自由に組み合わせてカスタマイズ">
+<meta name="theme-color" content="#000000">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="色で遊ぶ - コロンリン">
+<meta property="og:description" content="muta clay - あなただけのコロンリンを作ろう。色を自由に組み合わせてカスタマイズ">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="muta clay">
+<meta property="og:image" content="images/banner.png">
+<style>
+/* Same theme values as the earring page */
+:root{--bg:#000000;--surf:#274076;--surf2:#31508D;--txt:#EDF2FC;--txt2:#B6C6E2;--txt3:#8FA3C4;--acc:#FFD166;--acc-txt:#2E2100;--acc-soft:rgba(255,209,102,0.24);--acc2:#9BC4FF;--line:#4266A6;--r:14px;--font-ui:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;--sS:#FFD166;--sL:#8DF0CE}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--font-ui);min-height:100vh;padding:16px 12px 28px;background:var(--bg);color:var(--txt);-webkit-font-smoothing:antialiased}
+.container{max-width:560px;margin:0 auto}
+.banner{width:100%;border-radius:var(--r);overflow:hidden;margin-bottom:12px}
+.banner video{width:100%;display:block}
+header{text-align:center;padding:6px 0 10px;position:relative}
+header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
+.lang-switch{position:absolute;right:0;top:50%;transform:translateY(-50%);color:var(--txt2);padding:6px 12px;border-radius:999px;text-decoration:none;font-size:.7rem;border:1px solid var(--line)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.nav a{color:var(--txt2);font-size:.72rem;text-decoration:none;padding:8px 2px}
+.sel-sum{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 2px;margin-bottom:14px;display:flex;gap:6px}
+.sel-item{flex:1;display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;cursor:pointer;border:1px solid var(--line);background:var(--surf);font-family:inherit;color:inherit;text-align:left}
+.sel-item.active{border-color:var(--acc);background:var(--acc-soft)}
+.sel-dot{border-radius:50%;background:var(--surf2);background-size:cover;background-position:center;flex-shrink:0}
+#dS{width:20px;height:20px;box-shadow:0 0 0 2px var(--sS)}
+#dL{width:28px;height:28px;box-shadow:0 0 0 2px var(--sL)}
+.sel-info{flex:1;min-width:0}
+.sel-lbl{font-size:.78rem;color:var(--txt3);font-weight:500;line-height:1.2}
+.sel-nm{font-size:.7rem;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vtabs{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
+.vtab{padding:8px 18px;border-radius:999px;background:transparent;color:var(--txt2);font-size:.75rem;cursor:pointer;border:1px solid var(--line);font-family:inherit;letter-spacing:.02em}
+.vtab.active{background:var(--acc);border-color:var(--acc);color:var(--acc-txt)}
+.prev{width:100%;aspect-ratio:1/1;border-radius:var(--r);overflow:hidden;background:#8c8a85}
+#ringCanvas{width:100%;height:100%;display:block;cursor:pointer}.tap-hint{text-align:center;font-size:.68rem;color:var(--txt3);margin-top:6px}
+.tsec{margin-top:18px}
+.tsec h2{font-size:.72rem;color:var(--txt3);margin-bottom:6px;text-align:center;font-weight:500;letter-spacing:.06em}
+.mock{display:flex;flex-direction:column;gap:6px;align-items:center;margin:0 0 12px;padding:10px;border:1px dashed var(--acc);border-radius:var(--r)}
+.mock b{font-size:.7rem;color:var(--acc);letter-spacing:.08em}
+.mock .opts{display:flex;gap:6px}
+.mock button{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--txt2);font-size:.75rem;cursor:pointer;font-family:inherit}
+.mock button.on{background:var(--acc);border-color:var(--acc);color:var(--acc-txt)}
+.strip{position:relative}
+.tcar{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 0;scrollbar-width:none;scroll-behavior:smooth}
+.tcar::-webkit-scrollbar{display:none}
+.strip.fl .tcar{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 40px);mask-image:linear-gradient(to right,transparent 0,#000 40px)}
+.strip.fr .tcar{-webkit-mask-image:linear-gradient(to left,transparent 0,#000 40px);mask-image:linear-gradient(to left,transparent 0,#000 40px)}
+.strip.fl.fr .tcar{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%)}
+.tcar-in{display:grid;grid-auto-flow:column;grid-template-rows:repeat(var(--rows,3),auto);gap:6px 10px;padding:0 8px;width:max-content}
+.ti{display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:3px;border-radius:10px}
+.arw{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(0,0,0,.75);color:var(--txt);font-size:1.3rem;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:2}
+.arw.l{left:-4px}.arw.r{right:-4px}
+@media (hover:hover) and (pointer:fine){.strip.fl .arw.l,.strip.fr .arw.r{display:flex}}
+.ti:active{transform:scale(.95)}
+.tc{position:relative;width:52px;height:52px;border-radius:50%;background-size:115%;background-position:center;box-shadow:0 0 0 1px var(--line)}
+.ti.sS .tc{box-shadow:0 0 0 3px var(--sS)}
+.ti.sL .tc{box-shadow:0 0 0 3px var(--sL)}
+.ti.sS.sL .tc{box-shadow:0 0 0 3px var(--sS),0 0 0 6px var(--sL)}
+.tn{font-size:.58rem;color:var(--txt2);margin-top:4px}
+.pbg{position:absolute;top:-3px;right:-3px;width:18px;height:18px;border-radius:50%;background:var(--acc);color:var(--acc-txt);font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px var(--bg)}
+.pb{display:inline-block;margin-left:4px;padding:0 5px;border-radius:999px;background:var(--acc);color:var(--acc-txt);font-size:.55rem;font-weight:700;vertical-align:middle}
+.pnote{margin:10px 8px 0;font-size:.68rem;color:var(--txt2);line-height:1.7;text-align:center}
+.pnote b{color:var(--acc);font-weight:600}
+.psum{margin-top:6px;text-align:center;font-size:.8rem;color:var(--acc);font-weight:600;min-height:1.3em}
+.action-btns{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.action-btn{padding:9px 20px;border-radius:999px;border:1px solid transparent;font-size:.75rem;cursor:pointer;font-weight:500;font-family:inherit}
+.action-btn:active{transform:scale(.97)}
+.random-btn{background:transparent;color:var(--acc2);border-color:var(--acc2)}
+.share-btn{background:var(--acc);color:var(--acc-txt)}
+.rsec{border-top:1px solid var(--line);padding:16px 2px 4px;margin-top:26px}
+.rsec.hidden{display:none}
+.rsec h2{font-size:.82rem;color:var(--txt);font-weight:500;padding:4px 6px}
+.re{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line)}
+.re:last-child{border-bottom:none}
+.rn{font-size:.9rem;font-weight:500;color:var(--acc);width:28px;text-align:center;flex-shrink:0}
+.rdots{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.rdots span{border-radius:50%;background-size:115%;background-position:center;box-shadow:0 0 0 1px var(--line)}
+.rtn{flex:1;min-width:0;font-size:.75rem;color:var(--txt)}
+.rc{font-size:.62rem;color:var(--txt3);flex-shrink:0}
+.remp{text-align:center;color:var(--txt3);font-size:.78rem;padding:20px}
+.ilink{display:inline-flex;align-items:center;gap:6px;color:var(--txt);border:1px solid var(--line);border-radius:999px;padding:6px 12px!important}.icnt{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--acc);color:var(--acc-txt);font-size:.62rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center}.save-btn{display:block;width:100%;margin-top:12px;padding:13px;border-radius:999px;border:0;background:var(--acc);color:var(--acc-txt);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit}.save-btn:active{transform:scale(.98)}.xlink{display:block;text-align:center;margin-top:14px;color:var(--txt2);font-size:.75rem;text-decoration:none}.vcnt{text-align:center;padding:14px;color:var(--txt3);font-size:.72rem;margin-top:8px}
+</style></head>
+<body><div class="container">
+<div class="banner"><video src="images/banner.mp4" poster="images/banner.png" autoplay muted loop playsinline preload="metadata"></video></div>
+<div class="nav"><a href="index-new.html">‹ メニュー</a><a class="ilink" href="idea-list.html">アイデアリスト <span class="icnt" data-idea-count>0</span></a></div>
+<header><p>小・大 2ケ所の色を選ぶ</p><a href="index-ring-en.html" class="lang-switch">English</a></header>
+<div class="sel-sum">
+<button class="sel-item active" id="iS" onclick="selectSlot('S')"><div class="sel-dot" id="dS"></div><div class="sel-info"><div class="sel-lbl">小</div><div class="sel-nm" id="nS">-</div></div></button>
+<button class="sel-item" id="iL" onclick="selectSlot('L')"><div class="sel-dot" id="dL"></div><div class="sel-info"><div class="sel-lbl">大</div><div class="sel-nm" id="nL">-</div></div></button>
+</div>
+<div class="mock"><b>MOCKUP ・ 色の並び方を比べる</b><div class="opts"><button data-rows="1" onclick="setRows(1)">1行（いま）</button><button data-rows="2" onclick="setRows(2)">2行</button><button data-rows="3" class="on" onclick="setRows(3)">3行</button></div></div>
+<div class="vtabs"><button class="vtab active" data-view="top">着用イメージ</button><button class="vtab" data-view="angle">斜めビュー</button></div>
+<div class="prev"><canvas id="ringCanvas"></canvas></div><div class="tap-hint">写真の玉をタップしても選べます</div>
+<div class="tsec"><h2>テクスチャを選択</h2><div class="strip" id="strip"><button class="arw l" aria-label="前の色" onclick="scrollStrip(-1)">‹</button><div class="tcar" id="tScroll"><div class="tcar-in" id="tCar"></div></div><button class="arw r" aria-label="次の色" onclick="scrollStrip(1)">›</button></div>
+<div class="pnote">No.1〜36 BASIC COLOR：何色選んでも追加料金なし<br><b>No.37〜49 PREMIUM COLOR</b> <span class="pb">P</span>：1ヶ所ごとに追加料金</div>
+<div class="psum" id="pSum"></div>
+<div class="action-btns"><button class="action-btn random-btn" onclick="randomize()">ランダム</button><button class="action-btn share-btn" onclick="share()">📷 シェア</button></div><button class="save-btn" onclick="ideaSaveR()">＋ アイデアリストに保存</button><a class="xlink" href="index-earring.html">コロンピも作る ›</a></div>
+<div class="rsec hidden" id="rSec"><h2>人気の組み合わせ</h2><div id="rCnt"><div class="remp">読み込み中...</div></div></div>
+<div class="vcnt" id="vCnt"></div></div>
+<script src="idea.js"></script><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+// Texts that differ between the Japanese and English page
+const TXT={small:'小',large:'大',premiumSum:n=>'PREMIUM '+n+'ヶ所',noData:'まだデータがありません',times:' 回',visits:' 回カスタマイズされました'};
+
+// Premium rule (same as the earring page). fee:null = amount not decided yet, nothing is shown.
+const PREMIUM={from:37,fee:null};
+
+// Where the two spheres sit on each hand photo, in % of the image (x, y = centre, r = radius).
+// Large sphere is on the thumb side, small sphere towards the middle finger.
+const VIEWS={
+  top:{img:'images/ring-hand-top.jpg',S:{x:49.7,y:46.7,r:3.75},L:{x:62.1,y:46.9,r:6}},
+  angle:{img:'images/ring-hand-angle.jpg',S:{x:47.2,y:37.3,r:4.25},L:{x:30,y:33,r:6.8}}
+};
+
+let C=null;                      // shared config.json (colour catalogue, Firebase settings)
+let slot='S';                    // slot being edited
+let view='top';
+const picked={S:null,L:null};    // texture id per slot
+const texImg={S:null,L:null};    // loaded texture image per slot
+const handImg={top:null,angle:null};
+let cv,cx,db=null;
+let hideMarker=false;   // true while the image is exported for sharing
+let markerAlpha=0,markerTimer=null,markerRAF=null;   // outline shows briefly after a slot is chosen, then fades
+const tracked=new Set();
+
+function init(){
+  cv=document.getElementById('ringCanvas');cx=cv.getContext('2d');
+  cv.addEventListener('click',tapSphere);
+  cv.addEventListener('pointermove',hoverSphere);
+  cv.addEventListener('pointerleave',leaveCanvas);
+  document.querySelectorAll('.vtab').forEach(tab=>tab.addEventListener('click',()=>{
+    view=tab.dataset.view;
+    document.querySelectorAll('.vtab').forEach(t=>t.classList.toggle('active',t===tab));
+    draw();
+  }));
+  Object.keys(VIEWS).forEach(k=>{const im=new Image();im.onload=()=>{handImg[k]=im;draw();};im.src=VIEWS[k].img;});
+  window.addEventListener('resize',draw);
+  fetch('config.json').then(r=>r.json()).then(cfg=>{C=cfg;renderTextures();updateStrip();}).catch(e=>console.error('config.json',e));
+  draw();
+}
+
+function isPremium(t){
+  if(!t)return false;
+  const n=parseInt(String(t.name).replace(/[^0-9]/g,''),10);
+  return n>=PREMIUM.from;
+}
+function texById(id){return C?C.textures.find(t=>t.id===id):null;}
+
+function renderTextures(){
+  const car=document.getElementById('tCar');car.innerHTML='';
+  C.textures.forEach(t=>{
+    const item=document.createElement('div');item.className='ti';item.dataset.id=t.id;
+    const circle=document.createElement('div');circle.className='tc';circle.style.backgroundImage='url('+t.image+')';
+    if(isPremium(t)){const b=document.createElement('span');b.className='pbg';b.textContent='P';circle.appendChild(b);}
+    const name=document.createElement('div');name.className='tn';name.textContent=t.name;
+    item.appendChild(circle);item.appendChild(name);
+    item.onclick=()=>applyTexture(slot,t);
+    car.appendChild(item);
+  });
+}
+
+function selectSlot(s){
+  slot=s;flashMarker();
+  document.getElementById('iS').classList.toggle('active',s==='S');
+  document.getElementById('iL').classList.toggle('active',s==='L');
+}
+
+function applyTexture(s,t,noTrack){
+  picked[s]=t.id;
+  const im=new Image();
+  im.onload=()=>{if(picked[s]===t.id){texImg[s]=im;draw();}};
+  im.src=t.image;
+  updateSelection();
+  if(!noTrack)track();
+}
+
+function updateSelection(){
+  let premiumCount=0;
+  ['S','L'].forEach(s=>{
+    const t=texById(picked[s]);
+    document.getElementById('d'+s).style.backgroundImage=t?'url('+t.image+')':'none';
+    const nm=document.getElementById('n'+s);nm.textContent=t?t.name:'-';
+    if(isPremium(t)){premiumCount++;const b=document.createElement('span');b.className='pb';b.textContent='P';nm.appendChild(b);}
+  });
+  document.querySelectorAll('.ti').forEach(item=>{
+    item.classList.toggle('sS',item.dataset.id===picked.S);
+    item.classList.toggle('sL',item.dataset.id===picked.L);
+  });
+  let sum='';
+  if(premiumCount){sum=TXT.premiumSum(premiumCount);if(PREMIUM.fee)sum+='：+¥'+(premiumCount*PREMIUM.fee).toLocaleString();}
+  document.getElementById('pSum').textContent=sum;
+}
+
+function randomize(){
+  if(!C||C.textures.length<2)return;
+  const pick=()=>C.textures[Math.floor(Math.random()*C.textures.length)];
+  applyTexture('S',pick());applyTexture('L',pick());
+}
+
+// ---- drawing ----
+function draw(){
+  if(!cx)return;
+  const size=Math.round((cv.clientWidth||400)*2);
+  if(cv.width!==size){cv.width=size;cv.height=size;}
+  cx.clearRect(0,0,size,size);
+  const v=VIEWS[view],hand=handImg[view];
+  if(hand)cx.drawImage(hand,0,0,size,size);
+  else{cx.fillStyle='#8c8a85';cx.fillRect(0,0,size,size);}
+  drawSphere(v.S,texImg.S,size);
+  drawSphere(v.L,texImg.L,size);
+  if(!hideMarker&&markerAlpha>0){
+    // outline around the sphere being edited, in the same colour as its slot button
+    const p=v[slot],x=p.x/100*size,y=p.y/100*size,r=p.r/100*size;
+    cx.save();cx.globalAlpha=markerAlpha;cx.lineWidth=Math.max(3,size*.005);cx.strokeStyle=slot==='S'?'#FFD166':'#8DF0CE';
+    cx.beginPath();cx.arc(x,y,r*1.14,0,Math.PI*2);cx.stroke();cx.restore();
+  }
+}
+// tap on a sphere in the photo selects its slot (generous hit area for fingers)
+// which sphere is under the pointer; limit = how many radii away still counts
+function sphereAt(e,limit){
+  const rect=cv.getBoundingClientRect();
+  const px=(e.clientX-rect.left)/rect.width*100,py=(e.clientY-rect.top)/rect.height*100;
+  let best=null,bestD=Infinity;
+  ['S','L'].forEach(s=>{const p=VIEWS[view][s],d=Math.hypot(px-p.x,py-p.y)/p.r;if(d<bestD){bestD=d;best=s;}});
+  return bestD<limit?best:null;
+}
+function tapSphere(e){
+  const s=sphereAt(e,1.8);   // generous area for fingers
+  if(s)selectSlot(s);
+  else hideMarkerNow();      // tap on an empty spot clears the outline
+}
+// mouse over the active sphere shows the outline again; moving away fades it
+let hoverOn=false;
+function hoverSphere(e){
+  if(e.pointerType!=='mouse')return;
+  const over=sphereAt(e,1.15)===slot;
+  if(over&&!hoverOn){hoverOn=true;stopMarker();markerAlpha=1;draw();}
+  else if(!over&&hoverOn){hoverOn=false;fadeMarker(0);}
+}
+function leaveCanvas(){if(hoverOn){hoverOn=false;fadeMarker(0);}}
+function stopMarker(){clearTimeout(markerTimer);cancelAnimationFrame(markerRAF);}
+function fadeMarker(delay){
+  stopMarker();
+  markerTimer=setTimeout(()=>{
+    const start=performance.now(),from=markerAlpha;
+    const step=t=>{markerAlpha=Math.max(0,from*(1-(t-start)/500));draw();if(markerAlpha>0)markerRAF=requestAnimationFrame(step);};
+    markerRAF=requestAnimationFrame(step);
+  },delay);
+}
+function flashMarker(){
+  stopMarker();markerAlpha=1;draw();
+  if(!hoverOn)fadeMarker(1500);
+}
+function hideMarkerNow(){stopMarker();hoverOn=false;markerAlpha=0;draw();}
+function drawSphere(p,tex,size){
+  const x=p.x/100*size,y=p.y/100*size,r=p.r/100*size;
+  cx.save();
+  cx.shadowColor='rgba(60,30,15,.45)';cx.shadowBlur=r*.5;cx.shadowOffsetX=r*.18;cx.shadowOffsetY=r*.3;
+  // shadow pass: a slightly smaller disc so its edge never shows around the texture
+  cx.beginPath();cx.arc(x,y,r*.96,0,Math.PI*2);cx.fillStyle='#c9ccd1';cx.fill();
+  cx.shadowColor='transparent';
+  cx.beginPath();cx.arc(x,y,r,0,Math.PI*2);
+  if(tex){cx.save();cx.clip();cx.drawImage(tex,x-r*1.15,y-r*1.15,r*2.3,r*2.3);cx.restore();}
+  else{cx.fillStyle='#c9ccd1';cx.fill();}
+  const hl=cx.createRadialGradient(x-r*.35,y-r*.35,0,x-r*.35,y-r*.35,r*1.2);
+  hl.addColorStop(0,'rgba(255,255,255,.6)');hl.addColorStop(.3,'rgba(255,255,255,.2)');hl.addColorStop(1,'transparent');
+  cx.beginPath();cx.arc(x,y,r,0,Math.PI*2);cx.fillStyle=hl;cx.fill();
+  cx.restore();
+}
+
+// ---- share (same behaviour as the earring page) ----
+function share(){
+  // export a 1080 px JPEG copy (about 0.1-0.3 MB) instead of the full-resolution PNG
+  hideMarker=true;draw();
+  const out=document.createElement('canvas'),n=Math.min(1080,cv.width);
+  out.width=out.height=n;out.getContext('2d').drawImage(cv,0,0,n,n);
+  hideMarker=false;draw();
+  out.toBlob(blob=>{
+    if(!blob)return;
+    try{
+      const f=new File([blob],'my-ring-design.jpg',{type:'image/jpeg'});
+      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:'My Ring Design'}).catch(()=>download(blob));return;}
+    }catch(e){}
+    download(blob);
+  },'image/jpeg',0.88);
+}
+function download(blob){const a=document.createElement('a');a.download='my-ring-design.jpg';a.href=URL.createObjectURL(blob);a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+
+// ---- Firebase: ring combinations and visits are kept apart from the earring data ----
+function initFirebase(){
+  if(typeof firebase==='undefined'||!C.firebaseConfig)return;
+  try{
+    firebase.initializeApp({apiKey:C.firebaseConfig.apiKey,projectId:C.firebaseConfig.projectId,databaseURL:C.firebaseConfig.databaseUrl});
+    db=firebase.database();
+    loadRanking();countVisit();
+  }catch(e){console.error(e);}
+}
+function track(){
+  if(!db||!picked.S||!picked.L)return;
+  const key=picked.S+'_'+picked.L;
+  if(tracked.has(key))return;tracked.add(key);
+  const s=texById(picked.S),l=texById(picked.L);
+  db.ref('ringPairs/'+key).transaction(c=>c?{...c,count:(c.count||0)+1}:{count:1,smallId:s.id,bigId:l.id,smallName:s.name,bigName:l.name}).then(loadRanking).catch(()=>{});
+}
+function loadRanking(){
+  db.ref('ringPairs').once('value').then(snap=>{
+    const list=[];snap.forEach(c=>{const v=c.val();if(v&&typeof v==='object')list.push(v);});
+    list.sort((a,b)=>(Number(b.count)||0)-(Number(a.count)||0));
+    renderRanking(list.slice(0,(C.rankTopN||5)));
+  }).catch(()=>{});   // no permission for this path yet: the section simply stays hidden
+}
+function renderRanking(list){
+  const box=document.getElementById('rCnt');
+  document.getElementById('rSec').classList.remove('hidden');
+  box.innerHTML='';
+  if(!list.length){const e=document.createElement('div');e.className='remp';e.textContent=TXT.noData;box.appendChild(e);return;}
+  list.forEach((en,i)=>{
+    const row=document.createElement('div');row.className='re';
+    const num=document.createElement('div');num.className='rn';num.textContent='#'+(i+1);
+    const dots=document.createElement('div');dots.className='rdots';
+    [[en.smallId,18],[en.bigId,28]].forEach(([id,px])=>{const d=document.createElement('span');d.style.width=d.style.height=px+'px';const t=texById(id);if(t)d.style.backgroundImage='url('+t.image+')';dots.appendChild(d);});
+    const nm=document.createElement('div');nm.className='rtn';nm.textContent=TXT.small+' '+(en.smallName||'?')+' + '+TXT.large+' '+(en.bigName||'?');
+    const cnt=document.createElement('div');cnt.className='rc';cnt.textContent=(Number(en.count)||0)+TXT.times;
+    row.appendChild(num);row.appendChild(dots);row.appendChild(nm);row.appendChild(cnt);box.appendChild(row);
+  });
+}
+function countVisit(){
+  if(C.showVisitCounter===false)return;
+  const ref=db.ref('stats/ringVisits');
+  const show=v=>{document.getElementById('vCnt').textContent=String.fromCodePoint(0x1F380)+' '+(v||0).toLocaleString()+TXT.visits;};
+  const read=()=>ref.once('value').then(s=>show(s.val())).catch(()=>{});
+  if(sessionStorage.getItem('rvc')){read();return;}
+  // count once per browser session; mark it only after the database accepted it, and show the new total
+  ref.transaction(c=>(c||0)+1).then(r=>{if(r.committed)sessionStorage.setItem('rvc','1');show(r.snapshot.val());}).catch(read);
+}
+function ideaSaveR(){Idea.save('ring',{S:picked.S,L:picked.L});}
+// open a saved idea: index-ring.html?r=S,L (texture ids). Not counted in the popular ranking.
+function ideaLoadR(){const q=Idea.param('r');if(!q)return;const ids=q.split(',');['S','L'].forEach((s,i)=>{const t=texById(ids[i]);if(t)applyTexture(s,t,true);});}
+// ---- mockup: colour strip ----
+function setRows(n){
+  document.getElementById('tCar').style.setProperty('--rows',n);
+  document.querySelectorAll('.mock button').forEach(b=>b.classList.toggle('on',+b.dataset.rows===n));
+  const sc=document.getElementById('tScroll');sc.style.scrollBehavior='auto';sc.scrollLeft=0;sc.style.scrollBehavior='';updateStrip();
+}
+function updateStrip(){
+  const sc=document.getElementById('tScroll'),st=document.getElementById('strip');
+  st.classList.toggle('fl',sc.scrollLeft>4);
+  st.classList.toggle('fr',sc.scrollLeft+sc.clientWidth<sc.scrollWidth-4);
+}
+function scrollStrip(dir){const sc=document.getElementById('tScroll');sc.scrollBy({left:dir*sc.clientWidth*.8,behavior:'smooth'});}
+document.addEventListener('DOMContentLoaded',()=>{
+  const sc=document.getElementById('tScroll');
+  sc.addEventListener('scroll',updateStrip,{passive:true});window.addEventListener('resize',updateStrip);
+  // mouse wheel scrolls the strip sideways while the pointer is over it
+  sc.addEventListener('wheel',e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)&&sc.scrollWidth>sc.clientWidth){const before=sc.scrollLeft;sc.scrollLeft+=e.deltaY;if(sc.scrollLeft!==before)e.preventDefault();}},{passive:false});
+});
+document.addEventListener('DOMContentLoaded',init);
+</script></body></html>
