@@ -107,6 +107,7 @@ const texImg={S:null,L:null};    // loaded texture image per slot
 const handImg={top:null,angle:null};
 let cv,cx,db=null;
 let hideMarker=false;   // true while the image is exported for sharing
+let markerAlpha=0,markerTimer=null,markerRAF=null;   // outline shows briefly after a slot is chosen, then fades
 const tracked=new Set();
 
 function init(){
@@ -144,7 +145,7 @@ function renderTextures(){
 }
 
 function selectSlot(s){
-  slot=s;draw();
+  slot=s;flashMarker();
   document.getElementById('iS').classList.toggle('active',s==='S');
   document.getElementById('iL').classList.toggle('active',s==='L');
 }
@@ -192,10 +193,10 @@ function draw(){
   else{cx.fillStyle='#8c8a85';cx.fillRect(0,0,size,size);}
   drawSphere(v.S,texImg.S,size);
   drawSphere(v.L,texImg.L,size);
-  if(!hideMarker){
+  if(!hideMarker&&markerAlpha>0){
     // outline around the sphere being edited, in the same colour as its slot button
     const p=v[slot],x=p.x/100*size,y=p.y/100*size,r=p.r/100*size;
-    cx.save();cx.lineWidth=Math.max(3,size*.005);cx.strokeStyle=slot==='S'?'#FFD166':'#8DF0CE';
+    cx.save();cx.globalAlpha=markerAlpha;cx.lineWidth=Math.max(3,size*.005);cx.strokeStyle=slot==='S'?'#FFD166':'#8DF0CE';
     cx.beginPath();cx.arc(x,y,r*1.14,0,Math.PI*2);cx.stroke();cx.restore();
   }
 }
@@ -206,7 +207,18 @@ function tapSphere(e){
   let best=null,bestD=Infinity;
   ['S','L'].forEach(s=>{const p=VIEWS[view][s],d=Math.hypot(px-p.x,py-p.y)/p.r;if(d<bestD){bestD=d;best=s;}});
   if(best&&bestD<1.8)selectSlot(best);
+  else hideMarkerNow();   // tap on an empty spot clears the outline
 }
+function stopMarker(){clearTimeout(markerTimer);cancelAnimationFrame(markerRAF);}
+function flashMarker(){
+  stopMarker();markerAlpha=1;draw();
+  markerTimer=setTimeout(()=>{
+    const start=performance.now();
+    const step=t=>{markerAlpha=Math.max(0,1-(t-start)/500);draw();if(markerAlpha>0)markerRAF=requestAnimationFrame(step);};
+    markerRAF=requestAnimationFrame(step);
+  },1500);
+}
+function hideMarkerNow(){stopMarker();markerAlpha=0;draw();}
 function drawSphere(p,tex,size){
   const x=p.x/100*size,y=p.y/100*size,r=p.r/100*size;
   cx.save();
