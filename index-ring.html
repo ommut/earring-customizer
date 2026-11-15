@@ -257,18 +257,21 @@ function drawSphere(p,tex,size){
 
 // ---- share (same behaviour as the earring page) ----
 function share(){
+  // export a 1080 px JPEG copy (about 0.1-0.3 MB) instead of the full-resolution PNG
   hideMarker=true;draw();
-  cv.toBlob(blob=>{
+  const out=document.createElement('canvas'),n=Math.min(1080,cv.width);
+  out.width=out.height=n;out.getContext('2d').drawImage(cv,0,0,n,n);
+  hideMarker=false;draw();
+  out.toBlob(blob=>{
     if(!blob)return;
     try{
-      const f=new File([blob],'my-ring-design.png',{type:'image/png'});
+      const f=new File([blob],'my-ring-design.jpg',{type:'image/jpeg'});
       if(navigator.share&&navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:'My Ring Design'}).catch(()=>download(blob));return;}
     }catch(e){}
     download(blob);
-  },'image/png');
-  hideMarker=false;draw();   // toBlob has already taken its copy of the canvas
+  },'image/jpeg',0.88);
 }
-function download(blob){const a=document.createElement('a');a.download='my-ring-design.png';a.href=URL.createObjectURL(blob);a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+function download(blob){const a=document.createElement('a');a.download='my-ring-design.jpg';a.href=URL.createObjectURL(blob);a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
 
 // ---- Firebase: ring combinations and visits are kept apart from the earring data ----
 function initFirebase(){
