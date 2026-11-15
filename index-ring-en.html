@@ -67,6 +67,7 @@ header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
 .rc{font-size:.62rem;color:var(--txt3);flex-shrink:0}
 .remp{text-align:center;color:var(--txt3);font-size:.78rem;padding:20px}
 .ilink{display:inline-flex;align-items:center;gap:6px;color:var(--txt);border:1px solid var(--line);border-radius:999px;padding:6px 12px!important}.icnt{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--acc);color:var(--acc-txt);font-size:.62rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center}.save-btn{display:block;width:100%;margin-top:12px;padding:13px;border-radius:999px;border:0;background:var(--acc);color:var(--acc-txt);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit}.save-btn:active{transform:scale(.98)}.xlink{display:block;text-align:center;margin-top:14px;color:var(--txt2);font-size:.75rem;text-decoration:none}.vcnt{text-align:center;padding:14px;color:var(--txt3);font-size:.72rem;margin-top:8px}
+/* colour strip: 3 rows scrolling sideways, faded edges, arrows on mouse devices */.strip{position:relative}.tcar{scrollbar-width:none;scroll-behavior:smooth}.tcar::-webkit-scrollbar{display:none}.strip.fl .tcar{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 40px);mask-image:linear-gradient(to right,transparent 0,#000 40px)}.strip.fr .tcar{-webkit-mask-image:linear-gradient(to left,transparent 0,#000 40px);mask-image:linear-gradient(to left,transparent 0,#000 40px)}.strip.fl.fr .tcar{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%)}.tcar-in{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);gap:6px 10px;width:max-content}.ti{padding:3px}.tc{width:52px;height:52px}.arw{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(0,0,0,.75);color:var(--txt);font-size:1.3rem;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:2;font-family:inherit}.arw.l{left:-4px}.arw.r{right:-4px}@media (hover:hover) and (pointer:fine){.strip.fl .arw.l,.strip.fr .arw.r{display:flex}}
 </style></head>
 <body><div class="container">
 <div class="banner"><video src="images/banner.mp4" poster="images/banner.png" autoplay muted loop playsinline preload="metadata"></video></div>
@@ -78,8 +79,8 @@ header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
 </div>
 <div class="vtabs"><button class="vtab active" data-view="top">On Hand</button><button class="vtab" data-view="angle">Angled</button></div>
 <div class="prev"><canvas id="ringCanvas"></canvas></div><div class="tap-hint">You can also tap a sphere in the photo to select it</div>
-<div class="tsec"><h2>Select Texture</h2><div class="tcar"><div class="tcar-in" id="tCar"></div></div>
-<div class="pnote">No.1–36 BASIC COLOR: no extra charge<br><b>No.37–49 PREMIUM COLOR</b> <span class="pb">P</span>: extra charge per spot</div>
+<div class="tsec"><h2>Select Texture</h2><div class="strip" id="strip"><button class="arw l" aria-label="Previous colors" onclick="scrollStrip(-1)">‹</button><div class="tcar" id="tScroll"><div class="tcar-in" id="tCar"></div></div><button class="arw r" aria-label="Next colors" onclick="scrollStrip(1)">›</button></div>
+
 <div class="psum" id="pSum"></div>
 <div class="action-btns"><button class="action-btn random-btn" onclick="randomize()">random</button><button class="action-btn share-btn" onclick="share()">📷 Share</button></div><button class="save-btn" onclick="ideaSaveR()">+ Save to idea list</button><a class="xlink" href="index-earring-en.html">Design earrings too ›</a></div>
 <div class="rsec hidden" id="rSec"><h2>Popular Combinations</h2><div id="rCnt"><div class="remp">Loading...</div></div></div>
@@ -324,4 +325,9 @@ function ideaSaveR(){Idea.save('ring',{S:picked.S,L:picked.L});}
 // open a saved idea: index-ring.html?r=S,L (texture ids). Not counted in the popular ranking.
 function ideaLoadR(){const q=Idea.param('r');if(!q)return;const ids=q.split(',');['S','L'].forEach((s,i)=>{const t=texById(ids[i]);if(t)applyTexture(s,t,true);});}
 document.addEventListener('DOMContentLoaded',init);
+</script><script>
+// colour strip: edge fades / arrows follow the scroll position
+function updateStrip(){const sc=document.getElementById('tScroll'),st=document.getElementById('strip');if(!sc)return;st.classList.toggle('fl',sc.scrollLeft>4);st.classList.toggle('fr',sc.scrollLeft+sc.clientWidth<sc.scrollWidth-4);}
+function scrollStrip(dir){const sc=document.getElementById('tScroll');sc.scrollBy({left:dir*sc.clientWidth*.8,behavior:'smooth'});}
+document.addEventListener('DOMContentLoaded',()=>{const sc=document.getElementById('tScroll');if(!sc)return;sc.addEventListener('scroll',updateStrip,{passive:true});window.addEventListener('resize',updateStrip);new MutationObserver(updateStrip).observe(document.getElementById('tCar'),{childList:true});sc.addEventListener('wheel',e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)&&sc.scrollWidth>sc.clientWidth){const b=sc.scrollLeft;sc.scrollLeft+=e.deltaY;if(sc.scrollLeft!==b)e.preventDefault();}},{passive:false});updateStrip();});
 </script></body></html>

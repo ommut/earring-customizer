@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>色で遊ぶ - コロンリン</title>
-<meta name="description" content="muta clay - あなただけのコロンリンを作ろう。色を自由に組み合わせてカスタマイズ">
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>色で遊ぶ - コロリン</title>
+<meta name="description" content="muta clay - あなただけのコロリンを作ろう。色を自由に組み合わせてカスタマイズ">
 <meta name="theme-color" content="#000000">
-<meta property="og:title" content="色で遊ぶ - コロンリン">
-<meta property="og:description" content="muta clay - あなただけのコロンリンを作ろう。色を自由に組み合わせてカスタマイズ">
+<meta property="og:title" content="色で遊ぶ - コロリン">
+<meta property="og:description" content="muta clay - あなただけのコロリンを作ろう。色を自由に組み合わせてカスタマイズ">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="muta clay">
 <meta property="og:image" content="images/banner.png">
@@ -67,6 +67,7 @@ header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
 .rc{font-size:.62rem;color:var(--txt3);flex-shrink:0}
 .remp{text-align:center;color:var(--txt3);font-size:.78rem;padding:20px}
 .ilink{display:inline-flex;align-items:center;gap:6px;color:var(--txt);border:1px solid var(--line);border-radius:999px;padding:6px 12px!important}.icnt{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--acc);color:var(--acc-txt);font-size:.62rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center}.save-btn{display:block;width:100%;margin-top:12px;padding:13px;border-radius:999px;border:0;background:var(--acc);color:var(--acc-txt);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit}.save-btn:active{transform:scale(.98)}.xlink{display:block;text-align:center;margin-top:14px;color:var(--txt2);font-size:.75rem;text-decoration:none}.vcnt{text-align:center;padding:14px;color:var(--txt3);font-size:.72rem;margin-top:8px}
+/* colour strip: 3 rows scrolling sideways, faded edges, arrows on mouse devices */.strip{position:relative}.tcar{scrollbar-width:none;scroll-behavior:smooth}.tcar::-webkit-scrollbar{display:none}.strip.fl .tcar{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 40px);mask-image:linear-gradient(to right,transparent 0,#000 40px)}.strip.fr .tcar{-webkit-mask-image:linear-gradient(to left,transparent 0,#000 40px);mask-image:linear-gradient(to left,transparent 0,#000 40px)}.strip.fl.fr .tcar{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%)}.tcar-in{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);gap:6px 10px;width:max-content}.ti{padding:3px}.tc{width:52px;height:52px}.arw{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(0,0,0,.75);color:var(--txt);font-size:1.3rem;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:2;font-family:inherit}.arw.l{left:-4px}.arw.r{right:-4px}@media (hover:hover) and (pointer:fine){.strip.fl .arw.l,.strip.fr .arw.r{display:flex}}
 </style></head>
 <body><div class="container">
 <div class="banner"><video src="images/banner.mp4" poster="images/banner.png" autoplay muted loop playsinline preload="metadata"></video></div>
@@ -78,10 +79,10 @@ header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
 </div>
 <div class="vtabs"><button class="vtab active" data-view="top">着用イメージ</button><button class="vtab" data-view="angle">斜めビュー</button></div>
 <div class="prev"><canvas id="ringCanvas"></canvas></div><div class="tap-hint">写真の玉をタップしても選べます</div>
-<div class="tsec"><h2>テクスチャを選択</h2><div class="tcar"><div class="tcar-in" id="tCar"></div></div>
-<div class="pnote">No.1〜36 BASIC COLOR：何色選んでも追加料金なし<br><b>No.37〜49 PREMIUM COLOR</b> <span class="pb">P</span>：1ヶ所ごとに追加料金</div>
+<div class="tsec"><h2>テクスチャを選択</h2><div class="strip" id="strip"><button class="arw l" aria-label="前の色" onclick="scrollStrip(-1)">‹</button><div class="tcar" id="tScroll"><div class="tcar-in" id="tCar"></div></div><button class="arw r" aria-label="次の色" onclick="scrollStrip(1)">›</button></div>
+
 <div class="psum" id="pSum"></div>
-<div class="action-btns"><button class="action-btn random-btn" onclick="randomize()">ランダム</button><button class="action-btn share-btn" onclick="share()">📷 シェア</button></div><button class="save-btn" onclick="ideaSaveR()">＋ アイデアリストに保存</button><a class="xlink" href="index-earring.html">コロンピも作る ›</a></div>
+<div class="action-btns"><button class="action-btn random-btn" onclick="randomize()">ランダム</button><button class="action-btn share-btn" onclick="share()">📷 シェア</button></div><button class="save-btn" onclick="ideaSaveR()">＋ アイデアリストに保存</button><a class="xlink" href="index-earring.html">コロピも作る ›</a></div>
 <div class="rsec hidden" id="rSec"><h2>人気の組み合わせ</h2><div id="rCnt"><div class="remp">読み込み中...</div></div></div>
 <div class="vcnt" id="vCnt"></div></div>
 <script src="idea.js"></script><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -324,4 +325,9 @@ function ideaSaveR(){Idea.save('ring',{S:picked.S,L:picked.L});}
 // open a saved idea: index-ring.html?r=S,L (texture ids). Not counted in the popular ranking.
 function ideaLoadR(){const q=Idea.param('r');if(!q)return;const ids=q.split(',');['S','L'].forEach((s,i)=>{const t=texById(ids[i]);if(t)applyTexture(s,t,true);});}
 document.addEventListener('DOMContentLoaded',init);
+</script><script>
+// colour strip: edge fades / arrows follow the scroll position
+function updateStrip(){const sc=document.getElementById('tScroll'),st=document.getElementById('strip');if(!sc)return;st.classList.toggle('fl',sc.scrollLeft>4);st.classList.toggle('fr',sc.scrollLeft+sc.clientWidth<sc.scrollWidth-4);}
+function scrollStrip(dir){const sc=document.getElementById('tScroll');sc.scrollBy({left:dir*sc.clientWidth*.8,behavior:'smooth'});}
+document.addEventListener('DOMContentLoaded',()=>{const sc=document.getElementById('tScroll');if(!sc)return;sc.addEventListener('scroll',updateStrip,{passive:true});window.addEventListener('resize',updateStrip);new MutationObserver(updateStrip).observe(document.getElementById('tCar'),{childList:true});sc.addEventListener('wheel',e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)&&sc.scrollWidth>sc.clientWidth){const b=sc.scrollLeft;sc.scrollLeft+=e.deltaY;if(sc.scrollLeft!==b)e.preventDefault();}},{passive:false});updateStrip();});
 </script></body></html>
