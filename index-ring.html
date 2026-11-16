@@ -88,7 +88,7 @@ header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
 <script src="idea.js"></script><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
 // Texts that differ between the Japanese and English page
-const TXT={small:'小',large:'大',premiumSum:n=>'PREMIUM '+n+'ヶ所',noData:'まだデータがありません',times:' 回',visits:' 回カスタマイズされました'};
+const TXT={small:'小',large:'大',premiumSum:n=>'PREMIUM '+n+'ヶ所',noData:'まだデータがありません',times:' 回',total:n=>'これまでに '+n+' 回 組み合わせが作られました'};
 
 // Premium rule (same as the earring page). fee:null = amount not decided yet, nothing is shown.
 const PREMIUM={from:37,fee:null};
@@ -296,6 +296,9 @@ function loadRanking(){
     const list=[];snap.forEach(c=>{const v=c.val();if(v&&typeof v==='object')list.push(v);});
     list.sort((a,b)=>(Number(b.count)||0)-(Number(a.count)||0));
     renderRanking(list.slice(0,(C.rankTopN||5)));
+    // shown under the ranking: total of all combination counts
+    const tot=list.reduce((n,v)=>n+(Number(v.count)||0),0);
+    if(C.showVisitCounter!==false)document.getElementById('vCnt').textContent=String.fromCodePoint(0x1F380)+' '+TXT.total(tot.toLocaleString());
   }).catch(()=>{});   // no permission for this path yet: the section simply stays hidden
 }
 function renderRanking(list){
@@ -314,13 +317,10 @@ function renderRanking(list){
   });
 }
 function countVisit(){
-  if(C.showVisitCounter===false)return;
+  // visits are still counted (once per browser session) but no longer shown
   const ref=db.ref('stats/ringVisits');
-  const show=v=>{document.getElementById('vCnt').textContent=String.fromCodePoint(0x1F380)+' '+(v||0).toLocaleString()+TXT.visits;};
-  const read=()=>ref.once('value').then(s=>show(s.val())).catch(()=>{});
-  if(sessionStorage.getItem('rvc2')){read();return;}
-  // count once per browser session; mark it only after the database accepted it, and show the new total
-  ref.transaction(c=>(c||0)+1).then(r=>{if(r.committed)sessionStorage.setItem('rvc2','1');show(r.snapshot.val());}).catch(e=>{console.warn('[ringVisits] not counted:',e&&e.message);read();});
+  if(sessionStorage.getItem('rvc2'))return;
+  ref.transaction(c=>(c||0)+1).then(r=>{if(r.committed)sessionStorage.setItem('rvc2','1');}).catch(e=>console.warn('[ringVisits] not counted:',e&&e.message));
 }
 function ideaSaveR(){Idea.save('ring',{S:picked.S,L:picked.L});}
 // open a saved idea: index-ring.html?r=S,L (texture ids). Not counted in the popular ranking.
