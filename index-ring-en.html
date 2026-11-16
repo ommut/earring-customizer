@@ -155,6 +155,7 @@ function selectSlot(s){
 
 function applyTexture(s,t,noTrack){
   picked[s]=t.id;
+  try{sessionStorage.setItem('ringSel',JSON.stringify(picked));}catch(e){}   // restored when coming back from another page
   const im=new Image();
   im.onload=()=>{if(picked[s]===t.id){texImg[s]=im;draw();}};
   im.src=t.image;
@@ -323,7 +324,9 @@ function countVisit(){
 }
 function ideaSaveR(){Idea.save('ring',{S:picked.S,L:picked.L});}
 // open a saved idea: index-ring.html?r=S,L (texture ids). Not counted in the popular ranking.
-function ideaLoadR(){const q=Idea.param('r');if(!q)return;const ids=q.split(',');['S','L'].forEach((s,i)=>{const t=texById(ids[i]);if(t)applyTexture(s,t,true);});}
+function ideaLoadR(){let q=Idea.param('r');
+  if(!q){try{const v=JSON.parse(sessionStorage.getItem('ringSel')||'null');if(v)q=[v.S||'',v.L||''].join(',');}catch(e){}}
+  if(!q)return;const ids=q.split(',');['S','L'].forEach((s,i)=>{const t=texById(ids[i]);if(t)applyTexture(s,t,true);});}
 document.addEventListener('DOMContentLoaded',init);
 </script><script>
 // colour strip: edge fades / arrows follow the scroll position

@@ -63,7 +63,11 @@ function dlBlob(b){const a=document.createElement('a');a.download='my-earring-de
 function iVC(){if(!db)return;if(!sessionStorage.getItem('vc')){db.ref('stats/visits').transaction(c=>(c||0)+1);sessionStorage.setItem('vc','1');}db.ref('stats/visits').once('value').then(s=>{const v=s.val()||0;const el=document.getElementById('vCnt');if(el)el.textContent=String.fromCodePoint(0x1F380)+' '+v.toLocaleString()+' 回カスタマイズされました';}).catch(()=>{});}
 function ideaSaveE(){Idea.save('earring',{A:ti.A,B:ti.B,C:ti.C,D:ti.D});}
 // open a saved idea: index-earring.html?e=A,B,C,D (texture ids). Not counted in the popular ranking.
-async function ideaLoadE(){const q=Idea.param('e');if(!q)return;const ids=q.split(','),parts=['A','B','C','D'],keep=trk;trk=function(){};try{for(let i=0;i<4;i++){const t=C.textures.find(x=>x.id===ids[i]);if(!t)continue;const p=parts[i];sp(p);aT(t.id,t.image,t.name);await new Promise(r=>{let n=0;const iv=setInterval(()=>{if(tm[p]||++n>150){clearInterval(iv);r();}},30);});}}finally{trk=keep;}sp('A');}
+// remember the current colours for this browser tab, so coming back from another page restores them
+(function(){const orig=aT;aT=function(){orig.apply(this,arguments);try{sessionStorage.setItem('earSel',JSON.stringify(ti));}catch(e){}};})();
+async function ideaLoadE(){let q=Idea.param('e');
+if(!q){try{const v=JSON.parse(sessionStorage.getItem('earSel')||'null');if(v)q=['A','B','C','D'].map(k=>v[k]||'').join(',');}catch(e){}}
+if(!q)return;const ids=q.split(','),parts=['A','B','C','D'],keep=trk;trk=function(){};try{for(let i=0;i<4;i++){const t=C.textures.find(x=>x.id===ids[i]);if(!t)continue;const p=parts[i];sp(p);aT(t.id,t.image,t.name);await new Promise(r=>{let n=0;const iv=setInterval(()=>{if(tm[p]||++n>150){clearInterval(iv);r();}},30);});}}finally{trk=keep;}sp('A');}
 document.addEventListener('DOMContentLoaded',()=>{init();ideaLoadE();});
 </script><script>
 // colour strip: edge fades / arrows follow the scroll position

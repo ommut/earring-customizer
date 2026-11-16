@@ -9,7 +9,7 @@
 body{font-family:var(--font-ui);min-height:100vh;padding:16px 12px 32px;background:var(--bg);color:var(--txt);-webkit-font-smoothing:antialiased}
 .container{max-width:560px;margin:0 auto}
 .nav{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.nav a{color:var(--txt2);font-size:.72rem;text-decoration:none;padding:8px 2px}
+.nav a{color:var(--txt2);font-size:.72rem;text-decoration:none;padding:8px 2px}.navl{display:flex;align-items:center;gap:6px}.nav a.back{color:var(--txt);font-size:.85rem;font-weight:600;padding:10px 12px 10px 0}.nav a.menu{padding:10px 8px;border-left:1px solid var(--line)}
 .lang-switch{border:1px solid var(--line);border-radius:999px;padding:6px 12px!important}
 h1{font-size:1.2rem;font-weight:500;margin-top:14px}
 .lead{color:var(--txt2);font-size:.78rem;line-height:1.6;margin-top:4px}
@@ -55,7 +55,7 @@ h1{font-size:1.2rem;font-weight:500;margin-top:14px}
 .hidden{display:none!important}
 </style></head>
 <body><div class="container">
-<div class="nav"><a href="index-new.html">‹ メニュー</a><a href="idea-list-en.html" class="lang-switch">English</a></div>
+<div class="nav"><div class="navl"><a href="index-new.html" id="backLink" class="back">‹ もどる</a><a href="index-new.html" class="menu">メニュー</a></div><a href="idea-list-en.html" class="lang-switch">English</a></div>
 <h1>アイデアリスト</h1>
 <p class="lead">気になる組み合わせを保存して、あとで見比べられます。この端末のブラウザだけに保存されます。</p>
 <div class="bar"><div class="cnt" id="cnt"></div>
@@ -184,6 +184,9 @@ function copyMsg(){
   }
 }
 document.addEventListener('DOMContentLoaded',()=>{
+  const back=document.getElementById('backLink');let from=null;
+  try{const r=new URL(document.referrer);if(r.origin===location.origin&&!/idea-list/.test(r.pathname))from=r;}catch(e){}
+  if(from){back.href=from.pathname+from.search;back.addEventListener('click',e=>{if(history.length>1){e.preventDefault();history.back();}});}
   document.getElementById('igBtn').href='https://ig.me/m/'+IG;
   try{const v=localStorage.getItem('mutaIdeaView');if(v==='list'||v==='grid')view=v;}catch(e){}
   setView(view);
