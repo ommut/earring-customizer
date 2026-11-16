@@ -318,9 +318,9 @@ function countVisit(){
   const ref=db.ref('stats/ringVisits');
   const show=v=>{document.getElementById('vCnt').textContent=String.fromCodePoint(0x1F380)+' '+(v||0).toLocaleString()+TXT.visits;};
   const read=()=>ref.once('value').then(s=>show(s.val())).catch(()=>{});
-  if(sessionStorage.getItem('rvc')){read();return;}
+  if(sessionStorage.getItem('rvc2')){read();return;}
   // count once per browser session; mark it only after the database accepted it, and show the new total
-  ref.transaction(c=>(c||0)+1).then(r=>{if(r.committed)sessionStorage.setItem('rvc','1');show(r.snapshot.val());}).catch(read);
+  ref.transaction(c=>(c||0)+1).then(r=>{if(r.committed)sessionStorage.setItem('rvc2','1');show(r.snapshot.val());}).catch(e=>{console.warn('[ringVisits] not counted:',e&&e.message);read();});
 }
 function ideaSaveR(){Idea.save('ring',{S:picked.S,L:picked.L});}
 // open a saved idea: index-ring.html?r=S,L (texture ids). Not counted in the popular ranking.
