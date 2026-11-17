@@ -183,7 +183,7 @@ function updateSelection(){
 function randomize(){
   if(!C||C.textures.length<2)return;
   const pick=()=>C.textures[Math.floor(Math.random()*C.textures.length)];
-  applyTexture('S',pick());applyTexture('L',pick());
+  applyTexture('S',pick(),true);applyTexture('L',pick());   // count only the final pair
 }
 
 // ---- drawing ----
