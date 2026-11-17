@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Play with Colors - Idea list</title>
+<html lang="en"><head><meta charset="UTF-8"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Play with Colors - Idea list</title>
 <meta name="theme-color" content="#000000">
 <meta name="robots" content="noindex">
 <style>
@@ -55,7 +55,7 @@ h1{font-size:1.2rem;font-weight:500;margin-top:14px}
 .hidden{display:none!important}
 </style></head>
 <body><div class="container">
-<div class="nav"><div class="navl"><a href="index-new-en.html" id="backLink" class="back">‹ Back</a><a href="index-new-en.html" class="menu">Menu</a></div><a href="idea-list.html" class="lang-switch">日本語</a></div>
+<div class="nav"><div class="navl"><a href="index-en.html" id="backLink" class="back">‹ Back</a><a href="index-en.html" class="menu">Menu</a></div><a href="idea-list.html" class="lang-switch">日本語</a></div>
 <h1>Idea list</h1>
 <p class="lead">Save the combinations you like and compare them later. They are kept only in this browser on this device.</p>
 <div class="bar"><div class="cnt" id="cnt"></div>
@@ -71,6 +71,8 @@ h1{font-size:1.2rem;font-weight:500;margin-top:14px}
 </div>
 <script src="idea.js"></script>
 <script>
+function loadFail(e){console.error('config.json',e);if(document.getElementById('loadFail'))return;document.querySelector('.container').insertAdjacentHTML('afterbegin','<div id="loadFail" style="margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:.8rem;color:var(--txt)">Could not load. Please check your connection. <button onclick="location.reload()" style="margin-left:6px;padding:6px 14px;border-radius:999px;border:0;background:var(--acc);color:var(--acc-txt);font:inherit;font-weight:600;cursor:pointer">Reload</button></div>');}
+
 const IG='hiromi_mutaclay';
 const TXT={
   earring:'Earrings',ring:'Ring',small:'Small',large:'Large',open:'Open',del:' – delete',
@@ -190,7 +192,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('igBtn').href='https://ig.me/m/'+IG;
   try{const v=localStorage.getItem('mutaIdeaView');if(v==='list'||v==='grid')view=v;}catch(e){}
   setView(view);
-  fetch('config.json').then(r=>r.json()).then(cfg=>{cfg.textures.forEach(t=>{TEX[t.id]=t;});render();}).catch(e=>console.error('config.json',e));
+  fetch('config.json').then(r=>r.json()).then(cfg=>{cfg.textures.forEach(t=>{TEX[t.id]=t;});render();}).catch(loadFail);
 });
 window.addEventListener('pageshow',e=>{if(e.persisted)render();});
 </script></body></html>
