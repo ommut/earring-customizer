@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>色で遊ぶ - コロリン（コロンリング）</title>
+<html lang="ja"><head><meta charset="UTF-8"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>色で遊ぶ - コロリン（コロンリング）</title>
 <meta name="description" content="muta clay - あなただけのコロリン（コロンリング）を作ろう。色を自由に組み合わせてカスタマイズ">
 <meta name="theme-color" content="#000000">
 <meta property="og:title" content="色で遊ぶ - コロリン（コロンリング）">
 <meta property="og:description" content="muta clay - あなただけのコロリン（コロンリング）を作ろう。色を自由に組み合わせてカスタマイズ">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="muta clay">
-<meta property="og:image" content="images/banner.png">
+<meta property="og:image" content="https://mutaclay.netlify.app/images/banner.png">
 <style>
 /* Same theme values as the earring page */
 :root{--bg:#000000;--surf:#274076;--surf2:#31508D;--txt:#EDF2FC;--txt2:#B6C6E2;--txt3:#8FA3C4;--acc:#FFD166;--acc-txt:#2E2100;--acc-soft:rgba(255,209,102,0.24);--acc2:#9BC4FF;--line:#4266A6;--r:14px;--font-ui:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;--sS:#FFD166;--sL:#8DF0CE}
@@ -44,7 +44,7 @@ header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
 .ti.sS .tc{box-shadow:0 0 0 3px var(--sS)}
 .ti.sL .tc{box-shadow:0 0 0 3px var(--sL)}
 .ti.sS.sL .tc{box-shadow:0 0 0 3px var(--sS),0 0 0 6px var(--sL)}
-.tn{font-size:.58rem;color:var(--txt2);margin-top:4px}
+.tn{font-size:.7rem;color:var(--txt2);margin-top:4px}
 .pbg{position:absolute;top:-3px;right:-3px;width:18px;height:18px;border-radius:50%;background:var(--acc);color:var(--acc-txt);font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px var(--bg)}
 .pb{display:inline-block;margin-left:4px;padding:0 5px;border-radius:999px;background:var(--acc);color:var(--acc-txt);font-size:.55rem;font-weight:700;vertical-align:middle}
 .pnote{margin:10px 8px 0;font-size:.68rem;color:var(--txt2);line-height:1.7;text-align:center}
@@ -64,14 +64,14 @@ header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
 .rdots{display:flex;align-items:center;gap:4px;flex-shrink:0}
 .rdots span{border-radius:50%;background-size:115%;background-position:center;box-shadow:0 0 0 1px var(--line)}
 .rtn{flex:1;min-width:0;font-size:.75rem;color:var(--txt)}
-.rc{font-size:.62rem;color:var(--txt3);flex-shrink:0}
+.rc{font-size:.7rem;color:var(--txt3);flex-shrink:0}
 .remp{text-align:center;color:var(--txt3);font-size:.78rem;padding:20px}
 .ilink{display:inline-flex;align-items:center;gap:6px;color:var(--txt);border:1px solid var(--line);border-radius:999px;padding:6px 12px!important}.icnt{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--acc);color:var(--acc-txt);font-size:.62rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center}.save-btn{display:block;width:100%;margin-top:12px;padding:13px;border-radius:999px;border:0;background:var(--acc);color:var(--acc-txt);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit}.save-btn:active{transform:scale(.98)}.xlink{display:block;text-align:center;margin-top:14px;color:var(--txt2);font-size:.75rem;text-decoration:none}.vcnt{text-align:center;padding:14px;color:var(--txt3);font-size:.72rem;margin-top:8px}
 /* colour strip: 3 rows scrolling sideways, faded edges, arrows on mouse devices */.strip{position:relative}.tcar{scrollbar-width:none;scroll-behavior:smooth}.tcar::-webkit-scrollbar{display:none}.strip.fl .tcar{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 40px);mask-image:linear-gradient(to right,transparent 0,#000 40px)}.strip.fr .tcar{-webkit-mask-image:linear-gradient(to left,transparent 0,#000 40px);mask-image:linear-gradient(to left,transparent 0,#000 40px)}.strip.fl.fr .tcar{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%)}.tcar-in{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);gap:6px 10px;width:max-content}.ti{padding:3px}.tc{width:52px;height:52px}.arw{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(0,0,0,.75);color:var(--txt);font-size:1.3rem;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:2;font-family:inherit}.arw.l{left:-4px}.arw.r{right:-4px}@media (hover:hover) and (pointer:fine){.strip.fl .arw.l,.strip.fr .arw.r{display:flex}}
-</style></head>
+.plegend{display:flex;align-items:center;justify-content:center;gap:6px;margin:-2px 0 6px;font-size:.7rem;color:var(--txt2)}.plegend .pb{margin-left:0;font-size:.62rem}</style></head>
 <body><div class="container">
 <div class="banner"><video src="images/banner.mp4" poster="images/banner.png" autoplay muted loop playsinline preload="metadata"></video></div>
-<div class="nav"><a href="index-new.html">‹ メニュー</a><a class="ilink" href="idea-list.html">アイデアリスト <span class="icnt" data-idea-count>0</span></a></div>
+<div class="nav"><a href="index.html">‹ メニュー</a><a class="ilink" href="idea-list.html">アイデアリスト <span class="icnt" data-idea-count>0</span></a></div>
 <header><p>小・大 2ケ所の色を選ぶ</p><a href="index-ring-en.html" class="lang-switch">English</a></header>
 <div class="sel-sum">
 <button class="sel-item active" id="iS" onclick="selectSlot('S')"><div class="sel-dot" id="dS"></div><div class="sel-info"><div class="sel-lbl">小</div><div class="sel-nm" id="nS">-</div></div></button>
@@ -79,7 +79,7 @@ header p{color:var(--txt2);font-size:.78rem;letter-spacing:.02em}
 </div>
 <div class="vtabs"><button class="vtab active" data-view="top">着用イメージ</button><button class="vtab" data-view="angle">斜めビュー</button></div>
 <div class="prev"><canvas id="ringCanvas"></canvas></div><div class="tap-hint">写真の玉をタップしても選べます</div>
-<div class="tsec"><h2>テクスチャを選択</h2><div class="strip" id="strip"><button class="arw l" aria-label="前の色" onclick="scrollStrip(-1)">‹</button><div class="tcar" id="tScroll"><div class="tcar-in" id="tCar"></div></div><button class="arw r" aria-label="次の色" onclick="scrollStrip(1)">›</button></div>
+<div class="tsec"><h2>テクスチャを選択</h2><div class="plegend"><span class="pb">P</span><span>プレミアムカラー</span></div><div class="strip" id="strip"><button class="arw l" aria-label="前の色" onclick="scrollStrip(-1)">‹</button><div class="tcar" id="tScroll"><div class="tcar-in" id="tCar"></div></div><button class="arw r" aria-label="次の色" onclick="scrollStrip(1)">›</button></div>
 
 <div class="psum" id="pSum"></div>
 <div class="action-btns"><button class="action-btn random-btn" onclick="randomize()">ランダム</button><button class="action-btn share-btn" onclick="share()">📷 シェア</button></div><button class="save-btn" onclick="ideaSaveR()">＋ アイデアリストに保存</button><a class="xlink" href="index-earring.html">コロピ（コロンピアス）も作る ›</a></div>
@@ -123,7 +123,7 @@ function init(){
   }));
   Object.keys(VIEWS).forEach(k=>{const im=new Image();im.onload=()=>{handImg[k]=im;draw();};im.src=VIEWS[k].img;});
   window.addEventListener('resize',draw);
-  fetch('config.json').then(r=>r.json()).then(cfg=>{C=cfg;renderTextures();initFirebase();ideaLoadR();}).catch(e=>console.error('config.json',e));
+  fetch('config.json').then(r=>r.json()).then(cfg=>{C=cfg;renderTextures();initFirebase();ideaLoadR();}).catch(loadFail);
   draw();
 }
 
@@ -329,6 +329,8 @@ function ideaLoadR(){let q=Idea.param('r');
   if(!q)return;const ids=q.split(',');['S','L'].forEach((s,i)=>{const t=texById(ids[i]);if(t)applyTexture(s,t,true);});}
 document.addEventListener('DOMContentLoaded',init);
 </script><script>
+function loadFail(e){console.error('config.json',e);if(document.getElementById('loadFail'))return;document.querySelector('.container').insertAdjacentHTML('afterbegin','<div id="loadFail" style="margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:.8rem;color:var(--txt)">読み込めませんでした。通信環境をご確認ください。 <button onclick="location.reload()" style="margin-left:6px;padding:6px 14px;border-radius:999px;border:0;background:var(--acc);color:var(--acc-txt);font:inherit;font-weight:600;cursor:pointer">再読み込み</button></div>');}
+
 // colour strip: edge fades / arrows follow the scroll position
 function updateStrip(){const sc=document.getElementById('tScroll'),st=document.getElementById('strip');if(!sc)return;st.classList.toggle('fl',sc.scrollLeft>4);st.classList.toggle('fr',sc.scrollLeft+sc.clientWidth<sc.scrollWidth-4);}
 function scrollStrip(dir){const sc=document.getElementById('tScroll');sc.scrollBy({left:dir*sc.clientWidth*.8,behavior:'smooth'});}

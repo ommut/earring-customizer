@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Play with Colors | muta clay</title>
+<meta name="description" content="muta clay - Mix and match colors to design your own earrings and ring">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="Play with Colors">
+<meta property="og:description" content="muta clay - Mix and match colors to design your own earrings and ring">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="muta clay">
+<meta property="og:image" content="https://mutaclay.netlify.app/images/banner.png">
+<style>
+/* Same theme values as the customizer pages */
+:root{--bg:#000000;--surf:#274076;--surf2:#31508D;--txt:#EDF2FC;--txt2:#B6C6E2;--txt3:#8FA3C4;--acc:#FFD166;--acc-txt:#2E2100;--line:#4266A6;--r:14px;--font-ui:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--font-ui);min-height:100vh;padding:16px 12px 28px;background:var(--bg);color:var(--txt);-webkit-font-smoothing:antialiased}
+.container{max-width:560px;margin:0 auto}
+.banner{width:100%;border-radius:var(--r);overflow:hidden;margin-bottom:12px}
+.banner video{width:100%;display:block}
+header{position:relative;text-align:center;padding:10px 0 20px}
+header h1{font-size:1.25rem;font-weight:500;letter-spacing:.04em}
+header p{color:var(--txt2);font-size:.8rem;margin-top:4px}
+.lang-switch{position:absolute;right:0;top:8px;color:var(--txt2);padding:6px 12px;border-radius:999px;text-decoration:none;font-size:.7rem;border:1px solid var(--line)}
+.cards{display:flex;flex-direction:column;gap:12px}
+.card{display:flex;align-items:center;gap:16px;padding:16px;border-radius:var(--r);border:1px solid var(--line);background:var(--surf);color:var(--txt);text-decoration:none}
+.card:active{transform:scale(.98)}
+.thumb{position:relative;width:84px;height:84px;flex-shrink:0;border-radius:10px;background:#ffffff}
+.ball{position:absolute;border-radius:50%;background-size:115%;background-position:center}
+.ball::before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse 50% 40% at 30% 25%,rgba(255,255,255,.7) 0%,transparent 60%),radial-gradient(ellipse 100% 60% at 50% 100%,rgba(0,0,0,.15) 0%,transparent 60%)}
+.band{position:absolute;left:24px;top:34px;width:38px;height:38px;border-radius:50%;border:3px solid #B8C0C9}
+.info{flex:1;min-width:0}
+.ttl{display:flex;align-items:center;gap:8px;font-size:1.05rem;font-weight:500}
+.new{font-size:.62rem;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--acc);color:var(--acc-txt)}
+.sub{font-size:.78rem;color:var(--txt2);margin-top:3px}
+.arrow{color:var(--txt3);font-size:1.1rem;flex-shrink:0}
+.ilist{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;padding:14px;border-radius:var(--r);border:1px dashed var(--line);color:var(--txt);text-decoration:none;font-size:.85rem}.icnt{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--acc);color:var(--acc-txt);font-size:.62rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.order{margin-top:22px;padding:18px 16px;border-radius:var(--r);border:1px solid var(--line)}.order h2{font-size:.95rem;font-weight:600;text-align:center;margin-bottom:14px;letter-spacing:.04em}.order ol{list-style:none;display:flex;flex-direction:column;gap:12px}.order li{display:flex;gap:12px;align-items:flex-start;font-size:.82rem;line-height:1.6}.order .n{flex-shrink:0;font-size:1.05rem;font-weight:700;font-style:italic;color:var(--acc);width:26px}.order small{display:block;color:var(--txt2);font-size:.72rem}.order .note{margin-top:14px;font-size:.78rem;color:var(--txt2);text-align:center;line-height:1.7}.ig{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding:12px;border-radius:999px;background:var(--acc);color:var(--acc-txt);text-decoration:none;font-size:.85rem;font-weight:600}.ig svg{width:18px;height:18px}
+</style></head>
+<body><div class="container">
+<div class="banner"><video src="images/banner.mp4" poster="images/banner.png" autoplay muted loop playsinline preload="metadata"></video></div>
+<header><h1>Play with Colors</h1><p>Mix the colors you love into your own muta clay.</p><a href="index.html" class="lang-switch">日本語</a></header>
+<div class="cards">
+<a class="card" href="index-earring-en.html">
+<div class="thumb" aria-hidden="true">
+<div class="ball" style="left:15px;top:9px;width:20px;height:20px;background-image:url(textures/-5.webp)"></div>
+<div class="ball" style="left:9px;top:38px;width:32px;height:32px;background-image:url(textures/-12.webp)"></div>
+<div class="ball" style="left:49px;top:9px;width:20px;height:20px;background-image:url(textures/-20.webp)"></div>
+<div class="ball" style="left:43px;top:38px;width:32px;height:32px;background-image:url(textures/-33.webp)"></div>
+</div>
+<div class="info"><div class="ttl">Earrings</div><div class="sub">Choose colors for A, B, C, D</div></div>
+<div class="arrow" aria-hidden="true">›</div>
+</a>
+<a class="card" href="index-ring-en.html">
+<div class="thumb" aria-hidden="true">
+<div class="ball" style="left:12px;top:31px;width:22px;height:22px;background-image:url(textures/-41.webp)"></div>
+<div class="ball" style="left:38px;top:25px;width:34px;height:34px;background-image:url(textures/-5.webp)"></div>
+</div>
+<div class="info"><div class="ttl">Ring<span class="new">NEW</span></div><div class="sub">Choose two colors: small and large</div></div>
+<div class="arrow" aria-hidden="true">›</div>
+</a>
+</div>
+<a class="ilist" href="idea-list-en.html">Idea list <span class="icnt" data-idea-count>0</span></a>
+<section class="order"><h2>How to order</h2><ol><li><span class="n">01</span><span>Send “order” in an Instagram DM<small>Pasting the message from your idea list (“Copy message”) makes it quicker</small></span></li><li><span class="n">02</span><span>We talk about colours and you check a sample photo</span></li><li><span class="n">03</span><span>Shipped about 3 weeks after purchase</span></li></ol><p class="note">Ask about colours as many times as you like!<br>Check Instagram for order event dates and which item (earrings or ring) is open.</p><a class="ig" href="https://www.instagram.com/hiromi_mutaclay/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>@hiromi_mutaclay</a></section>
+</div><script src="idea.js"></script></body></html>

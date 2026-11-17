@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>色で遊ぶ - アイデアリスト</title>
+<html lang="ja"><head><meta charset="UTF-8"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>色で遊ぶ - アイデアリスト</title>
 <meta name="theme-color" content="#000000">
 <meta name="robots" content="noindex">
 <style>
@@ -55,7 +55,7 @@ h1{font-size:1.2rem;font-weight:500;margin-top:14px}
 .hidden{display:none!important}
 </style></head>
 <body><div class="container">
-<div class="nav"><div class="navl"><a href="index-new.html" id="backLink" class="back">‹ もどる</a><a href="index-new.html" class="menu">メニュー</a></div><a href="idea-list-en.html" class="lang-switch">English</a></div>
+<div class="nav"><div class="navl"><a href="index.html" id="backLink" class="back">‹ もどる</a><a href="index.html" class="menu">メニュー</a></div><a href="idea-list-en.html" class="lang-switch">English</a></div>
 <h1>アイデアリスト</h1>
 <p class="lead">気になる組み合わせを保存して、あとで見比べられます。この端末のブラウザだけに保存されます。</p>
 <div class="bar"><div class="cnt" id="cnt"></div>
@@ -71,6 +71,8 @@ h1{font-size:1.2rem;font-weight:500;margin-top:14px}
 </div>
 <script src="idea.js"></script>
 <script>
+function loadFail(e){console.error('config.json',e);if(document.getElementById('loadFail'))return;document.querySelector('.container').insertAdjacentHTML('afterbegin','<div id="loadFail" style="margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:.8rem;color:var(--txt)">読み込めませんでした。通信環境をご確認ください。 <button onclick="location.reload()" style="margin-left:6px;padding:6px 14px;border-radius:999px;border:0;background:var(--acc);color:var(--acc-txt);font:inherit;font-weight:600;cursor:pointer">再読み込み</button></div>');}
+
 const IG='hiromi_mutaclay';
 const TXT={
   earring:'コロピ（コロンピアス）',ring:'コロリン（コロンリング）',small:'小',large:'大',open:'ひらく',del:'を削除',
@@ -190,7 +192,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('igBtn').href='https://ig.me/m/'+IG;
   try{const v=localStorage.getItem('mutaIdeaView');if(v==='list'||v==='grid')view=v;}catch(e){}
   setView(view);
-  fetch('config.json').then(r=>r.json()).then(cfg=>{cfg.textures.forEach(t=>{TEX[t.id]=t;});render();}).catch(e=>console.error('config.json',e));
+  fetch('config.json').then(r=>r.json()).then(cfg=>{cfg.textures.forEach(t=>{TEX[t.id]=t;});render();}).catch(loadFail);
 });
 window.addEventListener('pageshow',e=>{if(e.persisted)render();});
 </script></body></html>

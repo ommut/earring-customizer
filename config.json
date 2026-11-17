@@ -246,7 +246,7 @@
       "image": "textures/-49.webp"
     }
   ],
-  "modelImage": "images/model_base.png",
+  "modelImage": "images/model_base.webp",
   "earImage": "images/ear_overlay.png",
   "backgroundImage": null,
   "bannerImage": "images/banner.png",

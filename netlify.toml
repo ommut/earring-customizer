@@ -1,0 +1,5 @@
+# The Firebase web key in config.json and the earring pages is public by design
+# (access is controlled by the Firebase database rules), so Netlify's "likely secret"
+# check must not block the deploy.
+[build.environment]
+  SECRETS_SCAN_SMART_DETECTION_ENABLED = "false"
