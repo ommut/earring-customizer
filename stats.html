@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>muta clay 統計</title>
+<style>
+:root{--ring:#8FC3FF;--bg:#000000;--surf:#274076;--surf2:#31508D;--txt:#EDF2FC;--txt2:#B6C6E2;--txt3:#8FA3C4;--acc:#FFD166;--acc-txt:#2E2100;--line:#4266A6;--r:14px;--font-ui:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-ui);min-height:100vh;padding:16px 12px 32px;background:var(--bg);color:var(--txt);-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto}
+h1{font-size:1.1rem;font-weight:600;margin-bottom:4px}
+.sub{font-size:.75rem;color:var(--txt3);margin-bottom:16px}
+h2{font-size:.9rem;font-weight:600;margin:22px 0 10px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(min-width:600px){.cards{grid-template-columns:repeat(4,1fr)}}
+.card{background:var(--surf);border-radius:var(--r);padding:12px}
+.card .v{font-size:1.4rem;font-weight:700;font-variant-numeric:tabular-nums}
+.card .l{font-size:.72rem;color:var(--txt2);margin-top:2px;line-height:1.4}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tabs button{flex:1;padding:8px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--txt2);font:inherit;font-size:.8rem;cursor:pointer}
+.tabs button.on{background:var(--acc);border-color:var(--acc);color:var(--acc-txt);font-weight:600}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r);border:1px solid var(--line)}
+table{border-collapse:collapse;font-size:.7rem;font-variant-numeric:tabular-nums}
+th,td{padding:4px 0;text-align:center;min-width:40px}table{width:100%}
+th{color:var(--txt3);font-weight:500}
+td.d,th.d{position:sticky;left:0;background:var(--bg);text-align:left;padding:5px 8px;min-width:52px;white-space:nowrap;color:var(--txt2)}
+td.t,th.t{padding:5px 8px;font-weight:600;color:var(--txt)}
+.hm td.c{color:var(--txt)}
+.bars{display:flex;flex-direction:column;gap:6px}
+.bar{display:flex;align-items:center;gap:8px;font-size:.78rem}
+.bar .k{width:28px;color:var(--txt2)}
+.bar .track{flex:1;height:14px;background:var(--surf);border-radius:7px;overflow:hidden}
+.bar .fill{height:100%;background:var(--acc);border-radius:7px}
+.bar .n{width:40px;text-align:right;font-variant-numeric:tabular-nums}
+
+.row{display:flex;align-items:center;gap:10px;background:var(--surf);border-radius:12px;padding:8px 10px;font-size:.8rem}
+.row .i{width:20px;color:var(--txt3);font-weight:600}
+.row .b{width:26px;height:26px;border-radius:50%;background-size:115%;background-position:center;flex-shrink:0}
+.row .b.s{width:18px;height:18px}
+.row .nm{flex:1;color:var(--txt2)}
+.row .c{font-weight:700;font-variant-numeric:tabular-nums}
+.grid2{display:grid;gap:16px}
+@media(min-width:600px){.grid2{grid-template-columns:1fr 1fr}}
+.empty{font-size:.78rem;color:var(--txt3);padding:10px 0}
+.legend{display:flex;gap:14px;font-size:.72rem;color:var(--txt2);margin:-4px 0 8px}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}.daily{display:flex;align-items:flex-end;gap:3px;height:160px;padding:8px 8px 0;border:1px solid var(--line);border-radius:var(--r);overflow-x:auto}.daily .col{flex:1;min-width:9px;max-width:28px;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}.daily .n{font-size:.6rem;color:var(--txt2);margin-bottom:2px}.daily .stk{width:100%;display:flex;flex-direction:column-reverse;border-radius:3px 3px 0 0;overflow:hidden}.daily .d{font-size:.55rem;color:var(--txt3);margin:4px 0 6px;white-space:nowrap}.more{margin-top:22px;border:1px dashed var(--line);border-radius:var(--r)}.more[open]{border-style:solid}.more summary{list-style:none;display:flex;justify-content:center;align-items:center;gap:8px;padding:14px;font-size:.85rem;cursor:pointer}.more summary::-webkit-details-marker{display:none}.more summary::after{content:'›';color:var(--txt3);font-size:1.1rem;line-height:1;transition:transform .2s}.more[open] summary::after{transform:rotate(90deg)}.more .grid2{padding:0 10px 12px}.more h3{font-size:.8rem;font-weight:600;color:var(--txt2);margin:4px 0 8px}.rank{display:flex;flex-direction:column;gap:5px}.err{background:var(--surf);border-radius:var(--r);padding:12px;font-size:.8rem;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>muta clay 統計</h1>
+  <div class="sub" id="upd">読み込み中…</div>
+
+  <div class="cards">
+    <div class="card"><div class="v" id="cEV">-</div><div class="l">コロピ 訪問</div></div>
+    <div class="card"><div class="v" id="cRV">-</div><div class="l">コロリン 訪問<br><span id="cRVn"></span></div></div>
+    <div class="card"><div class="v" id="cED">-</div><div class="l">コロピ 組み合わせ<br>（ページ表示の数）</div></div>
+    <div class="card"><div class="v" id="cRD">-</div><div class="l">コロリン 組み合わせ<br>（ページ表示の数）</div></div>
+  </div>
+
+  <h2>日別の訪問（直近30日）</h2>
+  <div class="legend"><span><i style="background:var(--acc)"></i>コロピ</span><span><i style="background:var(--ring)"></i>コロリン</span></div>
+  <div class="daily" id="daily"></div>
+
+  <h2>時間帯別の訪問（日本時間・直近7日）</h2>
+  <div class="tabs" id="tabs">
+    <button data-p="all" class="on">両方</button><button data-p="earring">コロピ</button><button data-p="ring">コロリン</button>
+  </div>
+  <div class="scroll"><table class="hm" id="hm"></table></div>
+
+  <h2>曜日別の訪問</h2>
+  <div class="bars" id="wd"></div>
+
+  <details class="more">
+    <summary>人気の組み合わせ TOP20</summary>
+    <div class="grid2">
+      <div><h3>コロピ</h3><div class="rank" id="rE"></div></div>
+      <div><h3>コロリン</h3><div class="rank" id="rR"></div></div>
+    </div>
+  </details>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+// Read-only summary of the customizer counters in Firebase. Not linked from any page.
+const RING_SEED=100;   // ringVisits was started from 100 by hand
+const WD=['日','月','火','水','木','金','土'];
+let C,TEX={},hourly={},part='all';
+
+const $=id=>document.getElementById(id);
+const fmt=n=>Number(n||0).toLocaleString();
+const sumCounts=o=>Object.values(o||{}).reduce((n,v)=>n+(Number(v&&v.count)||0),0);
+
+function cards(st,pairs,ringPairs){
+  $('cEV').textContent=fmt(st.earringVisits);
+  $('cRV').textContent=fmt(st.ringVisits);
+  $('cRVn').textContent=st.ringVisits?'（実数 約'+fmt(Math.max(0,st.ringVisits-RING_SEED))+'）':'';
+  const ed=typeof st.earringDesigns==='number'?st.earringDesigns:Math.round(sumCounts(pairs)/2);
+  $('cED').textContent=fmt(ed);
+  $('cRD').textContent=fmt(sumCounts(ringPairs));
+}
+
+// hourly = {earring:{date:{HH:n}}, ring:{...}} -> {date:[24 numbers]} for the chosen part
+function byDate(){
+  const out={};
+  ['earring','ring'].forEach(p=>{
+    if(part!=='all'&&part!==p)return;
+    Object.entries(hourly[p]||{}).forEach(([d,hs])=>{
+      out[d]=out[d]||Array(24).fill(0);
+      Object.entries(hs||{}).forEach(([h,n])=>{out[d][Number(h)]+=Number(n)||0;});
+    });
+  });
+  return out;
+}
+
+function heatmap(){
+  // rows = hours, columns = the last 7 days (fits a phone screen)
+  const rows=byDate(),dates=Object.keys(rows).sort().slice(-7);
+  const t=$('hm');
+  if(!dates.length){t.innerHTML='<tr><td class="empty" style="padding:12px">まだデータがありません</td></tr>';return;}
+  const max=Math.max(1,...dates.flatMap(d=>rows[d]));
+  const cell=n=>{const a=n?0.15+0.85*n/max:0;return '<td class="c" style="background:'+(n?'rgba(255,209,102,'+a.toFixed(2)+')':'transparent')+';color:'+(a>0.55?'var(--acc-txt)':'var(--txt)')+'">'+(n||'')+'</td>';};
+  let h='<tr><th class="d">時</th>'+dates.map(d=>'<th>'+d.slice(5).replace('-','/')+'<br>'+WD[new Date(d+'T12:00:00Z').getUTCDay()]+'</th>').join('')+'</tr>';
+  for(let i=0;i<24;i++)h+='<tr><td class="d">'+i+':00</td>'+dates.map(d=>cell(rows[d][i])).join('')+'</tr>';
+  h+='<tr><td class="d t">計</td>'+dates.map(d=>'<td class="t">'+rows[d].reduce((x,y)=>x+y,0)+'</td>').join('')+'</tr>';
+  t.innerHTML=h;
+}
+
+function weekdays(){
+  const rows=byDate(),tot=Array(7).fill(0);
+  Object.entries(rows).forEach(([d,hs])=>{tot[new Date(d+'T12:00:00Z').getUTCDay()]+=hs.reduce((a,b)=>a+b,0);});
+  const max=Math.max(1,...tot);
+  $('wd').innerHTML=[1,2,3,4,5,6,0].map(i=>'<div class="bar"><span class="k">'+WD[i]+'</span><div class="track"><div class="fill" style="width:'+(100*tot[i]/max)+'%"></div></div><span class="n">'+tot[i]+'</span></div>').join('');
+}
+
+function daily(){
+  // one bar per day: earring (bottom) + ring (top); days without data stay empty
+  const days=new Set();['earring','ring'].forEach(p=>Object.keys(hourly[p]||{}).forEach(d=>days.add(d)));
+  const el=$('daily');
+  if(!days.size){el.innerHTML='<div class="empty">まだデータがありません</div>';return;}
+  const sorted=[...days].sort(),first=sorted[0],list=[];
+  const today=new Date(Date.now()+9*3600e3).toISOString().slice(0,10);
+  const last=sorted[sorted.length-1]>today?sorted[sorted.length-1]:today;
+  for(let d=new Date(first+'T12:00:00Z');d.toISOString().slice(0,10)<=last;d.setUTCDate(d.getUTCDate()+1))list.push(d.toISOString().slice(0,10));
+  const tot=(p,d)=>Object.values((hourly[p]||{})[d]||{}).reduce((a,b)=>a+(Number(b)||0),0);
+  const rows=list.slice(-30).map(d=>({d,e:tot('earring',d),r:tot('ring',d)}));
+  const max=Math.max(1,...rows.map(x=>x.e+x.r)),H=110;
+  el.innerHTML=rows.map(x=>'<div class="col"><span class="n">'+((x.e+x.r)||'')+'</span><div class="stk"><div style="height:'+(H*x.e/max)+'px;background:var(--acc)"></div><div style="height:'+(H*x.r/max)+'px;background:var(--ring)"></div></div><span class="d">'+Number(x.d.slice(8))+'</span></div>').join('');
+}
+
+function rank(el,obj){
+  const list=Object.values(obj||{}).filter(v=>v&&typeof v==='object').sort((a,b)=>(Number(b.count)||0)-(Number(a.count)||0)).slice(0,20);
+  if(!list.length){el.innerHTML='<div class="empty">まだデータがありません</div>';return;}
+  const ball=(id,cls)=>{const t=TEX[id];return '<span class="b'+(cls?' '+cls:'')+'" style="background-image:url('+(t?t.image:'')+')"></span>';};
+  el.innerHTML=list.map((v,i)=>'<div class="row"><span class="i">'+(i+1)+'</span>'+ball(v.smallId,'s')+ball(v.bigId)+'<span class="nm">小 '+(v.smallName||'?')+' ／ 大 '+(v.bigName||'?')+'</span><span class="c">'+fmt(v.count)+'</span></div>').join('');
+}
+
+$('tabs').onclick=e=>{
+  const b=e.target.closest('button');if(!b)return;
+  part=b.dataset.p;
+  document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));
+  heatmap();weekdays();
+};
+
+fetch('config.json').then(r=>r.json()).then(cfg=>{
+  C=cfg;C.textures.forEach(t=>TEX[t.id]=t);
+  firebase.initializeApp({apiKey:C.firebaseConfig.apiKey,projectId:C.firebaseConfig.projectId,databaseURL:C.firebaseConfig.databaseUrl});
+  const db=firebase.database();
+  return Promise.all(['stats','pairs','ringPairs'].map(p=>db.ref(p).once('value').then(s=>s.val()||{})));
+}).then(([st,pairs,ringPairs])=>{
+  hourly=st.hourly||{};
+  cards(st,pairs,ringPairs);daily();heatmap();weekdays();rank($('rE'),pairs);rank($('rR'),ringPairs);
+  $('upd').textContent='更新：'+new Date().toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'})+'（ページを再読み込みで最新）';
+}).catch(e=>{
+  console.error(e);
+  $('upd').innerHTML='<div class="err">読み込めませんでした。通信環境をご確認のうえ、再読み込みしてください。</div>';
+});
+</script>
+</body>
+</html>
