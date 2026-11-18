@@ -320,8 +320,9 @@ function countVisit(){
   // visits are still counted (once per browser session) but no longer shown
   const ref=db.ref('stats/ringVisits');
   if(sessionStorage.getItem('rvc2'))return;
-  ref.transaction(c=>(c||0)+1).then(r=>{if(r.committed)sessionStorage.setItem('rvc2','1');}).catch(e=>console.warn('[ringVisits] not counted:',e&&e.message));
+  ref.transaction(c=>(c||0)+1).then(r=>{if(r.committed){sessionStorage.setItem('rvc2','1');db.ref('stats/hourly/ring/'+hourKey()).transaction(c=>(c||0)+1).catch(()=>{});}}).catch(e=>console.warn('[ringVisits] not counted:',e&&e.message));
 }
+function hourKey(){const d=new Date(Date.now()+9*3600e3);return d.toISOString().slice(0,10)+'/'+d.toISOString().slice(11,13);}
 function ideaSaveR(){Idea.save('ring',{S:picked.S,L:picked.L});}
 // open a saved idea: index-ring.html?r=S,L (texture ids). Not counted in the popular ranking.
 function ideaLoadR(){let q=Idea.param('r');
