@@ -290,6 +290,7 @@ function track(){
   if(tracked.has(key))return;tracked.add(key);
   const s=texById(picked.S),l=texById(picked.L);
   db.ref('ringPairs/'+key).transaction(c=>c?{...c,count:(c.count||0)+1}:{count:1,smallId:s.id,bigId:l.id,smallName:s.name,bigName:l.name}).then(loadRanking).catch(()=>{});
+  db.ref('ringPairsDaily/'+hourKey().slice(0,10)+'/'+key).transaction(c=>(c||0)+1).catch(()=>{});   // per-day copy for stats.html
 }
 function loadRanking(){
   db.ref('ringPairs').once('value').then(snap=>{

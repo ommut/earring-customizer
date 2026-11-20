@@ -45,7 +45,7 @@ td.t,th.t{padding:5px 8px;font-weight:600;color:var(--txt)}
 .grid2{display:grid;gap:16px}
 @media(min-width:600px){.grid2{grid-template-columns:1fr 1fr}}
 .empty{font-size:.78rem;color:var(--txt3);padding:10px 0}
-.legend{display:flex;gap:14px;font-size:.72rem;color:var(--txt2);margin:-4px 0 8px}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}.daily{display:flex;align-items:flex-end;gap:3px;height:160px;padding:8px 8px 0;border:1px solid var(--line);border-radius:var(--r);overflow-x:auto}.daily .col{flex:1;min-width:9px;max-width:28px;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}.daily .n{font-size:.6rem;color:var(--txt2);margin-bottom:2px}.daily .stk{width:100%;display:flex;flex-direction:column-reverse;border-radius:3px 3px 0 0;overflow:hidden}.daily .d{font-size:.55rem;color:var(--txt3);margin:4px 0 6px;white-space:nowrap}.more{margin-top:22px;border:1px dashed var(--line);border-radius:var(--r)}.more[open]{border-style:solid}.more summary{list-style:none;display:flex;justify-content:center;align-items:center;gap:8px;padding:14px;font-size:.85rem;cursor:pointer}.more summary::-webkit-details-marker{display:none}.more summary::after{content:'›';color:var(--txt3);font-size:1.1rem;line-height:1;transition:transform .2s}.more[open] summary::after{transform:rotate(90deg)}.more .grid2{padding:0 10px 12px}.more h3{font-size:.8rem;font-weight:600;color:var(--txt2);margin:4px 0 8px}.rank{display:flex;flex-direction:column;gap:5px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.lang button{border:0;background:transparent;color:var(--txt2);font:inherit;font-size:.72rem;padding:5px 10px;cursor:pointer}.lang button.on{background:var(--acc);color:var(--acc-txt);font-weight:600}.err{background:var(--surf);border-radius:var(--r);padding:12px;font-size:.8rem;margin-top:12px}
+.legend{display:flex;gap:14px;font-size:.72rem;color:var(--txt2);margin:-4px 0 8px}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}.daily{display:flex;align-items:flex-end;gap:3px;height:160px;padding:8px 8px 0;border:1px solid var(--line);border-radius:var(--r);overflow-x:auto}.daily .col{flex:1;min-width:9px;max-width:28px;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}.daily .n{font-size:.6rem;color:var(--txt2);margin-bottom:2px}.daily .stk{width:100%;display:flex;flex-direction:column-reverse;border-radius:3px 3px 0 0;overflow:hidden}.daily .d{font-size:.55rem;color:var(--txt3);margin:4px 0 6px;white-space:nowrap}.more{margin-top:22px;border:1px dashed var(--line);border-radius:var(--r)}.more[open]{border-style:solid}.more summary{list-style:none;display:flex;justify-content:center;align-items:center;gap:8px;padding:14px;font-size:.85rem;cursor:pointer}.more summary::-webkit-details-marker{display:none}.more summary::after{content:'›';color:var(--txt3);font-size:1.1rem;line-height:1;transition:transform .2s}.more[open] summary::after{transform:rotate(90deg)}.more .grid2{padding:0 10px 12px}.more h3{font-size:.8rem;font-weight:600;color:var(--txt2);margin:4px 0 8px}.rank{display:flex;flex-direction:column;gap:5px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.lang button{border:0;background:transparent;color:var(--txt2);font:inherit;font-size:.72rem;padding:5px 10px;cursor:pointer}.lang button.on{background:var(--acc);color:var(--acc-txt);font-weight:600}.note{font-size:.7rem;color:var(--txt3);padding:0 12px 6px;text-align:center}.err{background:var(--surf);border-radius:var(--r);padding:12px;font-size:.8rem;margin-top:12px}
 </style>
 </head>
 <body>
@@ -75,6 +75,8 @@ td.t,th.t{padding:5px 8px;font-weight:600;color:var(--txt)}
 
   <details class="more">
     <summary data-i="top">人気の組み合わせ TOP20</summary>
+    <div class="tabs" id="rtabs" style="padding:0 10px"><button data-r="all" class="on" data-i="rAll">全期間</button><button data-r="7" data-i="r7">直近7日</button></div>
+    <div class="note" id="rnote"></div>
     <div class="grid2">
       <div><h3 data-i="rkE">コロピ</h3><div class="rank" id="rE"></div></div>
       <div><h3 data-i="rkR">コロリン</h3><div class="rank" id="rR"></div></div>
@@ -88,10 +90,10 @@ td.t,th.t{padding:5px 8px;font-weight:600;color:var(--txt)}
 <script>
 // Read-only summary of the customizer counters in Firebase. Not linked from any page.
 const RING_SEED=100;   // ringVisits was started from 100 by hand
-const T={"title": {"ja": "muta clay 統計", "en": "muta clay stats"}, "loading": {"ja": "読み込み中…", "en": "Loading…"}, "cEV": {"ja": "コロピ 訪問", "en": "Earring visits"}, "cRV": {"ja": "コロリン 訪問", "en": "Ring visits"}, "cED": {"ja": "コロピ 組み合わせ<br>（ページ表示の数）", "en": "Earring combinations<br>(number shown on page)"}, "cRD": {"ja": "コロリン 組み合わせ<br>（ページ表示の数）", "en": "Ring combinations<br>(number shown on page)"}, "hDaily": {"ja": "日別の訪問（直近30日）", "en": "Visits per day (last 30 days)"}, "lgE": {"ja": "コロピ", "en": "Earrings"}, "lgR": {"ja": "コロリン", "en": "Ring"}, "hHour": {"ja": "時間帯別の訪問（日本時間・直近7日）", "en": "Visits per hour (Japan time, last 7 days)"}, "tAll": {"ja": "両方", "en": "Both"}, "tE": {"ja": "コロピ", "en": "Earrings"}, "tR": {"ja": "コロリン", "en": "Ring"}, "hWd": {"ja": "曜日別の訪問", "en": "Visits per weekday"}, "top": {"ja": "人気の組み合わせ TOP20", "en": "Popular combinations TOP20"}, "rkE": {"ja": "コロピ", "en": "Earrings"}, "rkR": {"ja": "コロリン", "en": "Ring"}};
+const T={"title": {"ja": "muta clay 統計", "en": "muta clay stats"}, "loading": {"ja": "読み込み中…", "en": "Loading…"}, "cEV": {"ja": "コロピ 訪問", "en": "Earring visits"}, "cRV": {"ja": "コロリン 訪問", "en": "Ring visits"}, "cED": {"ja": "コロピ 組み合わせ<br>（ページ表示の数）", "en": "Earring combinations<br>(number shown on page)"}, "cRD": {"ja": "コロリン 組み合わせ<br>（ページ表示の数）", "en": "Ring combinations<br>(number shown on page)"}, "hDaily": {"ja": "日別の訪問（直近30日）", "en": "Visits per day (last 30 days)"}, "lgE": {"ja": "コロピ", "en": "Earrings"}, "lgR": {"ja": "コロリン", "en": "Ring"}, "hHour": {"ja": "時間帯別の訪問（日本時間・直近7日）", "en": "Visits per hour (Japan time, last 7 days)"}, "tAll": {"ja": "両方", "en": "Both"}, "tE": {"ja": "コロピ", "en": "Earrings"}, "tR": {"ja": "コロリン", "en": "Ring"}, "hWd": {"ja": "曜日別の訪問", "en": "Visits per weekday"}, "top": {"ja": "人気の組み合わせ TOP20", "en": "Popular combinations TOP20"}, "rkE": {"ja": "コロピ", "en": "Earrings"}, "rkR": {"ja": "コロリン", "en": "Ring"}, "rAll": {"ja": "全期間", "en": "All time"}, "r7": {"ja": "直近7日", "en": "Last 7 days"}};
 const WDS={ja:['日','月','火','水','木','金','土'],en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat']};
-const M={ja:{noData:'まだデータがありません',real:n=>'（実数 約'+n+'）',hour:'時',total:'計',small:'小',big:'大',upd:t=>'更新：'+t+'（ページを再読み込みで最新）',err:'読み込めませんでした。通信環境をご確認のうえ、再読み込みしてください。'},
-         en:{noData:'No data yet',real:n=>'(real ≈ '+n+')',hour:'Hour',total:'Total',small:'S',big:'L',upd:t=>'Updated: '+t+' (reload for latest)',err:'Could not load. Check your connection and reload.'}};
+const M={ja:{noData:'まだデータがありません',since:d=>d+' からの記録（7日分たまるまで）',real:n=>'（実数 約'+n+'）',hour:'時',total:'計',small:'小',big:'大',upd:t=>'更新：'+t+'（ページを再読み込みで最新）',err:'読み込めませんでした。通信環境をご確認のうえ、再読み込みしてください。'},
+         en:{noData:'No data yet',since:d=>'Recorded since '+d+' (until 7 days are collected)',real:n=>'(real ≈ '+n+')',hour:'Hour',total:'Total',small:'S',big:'L',upd:t=>'Updated: '+t+' (reload for latest)',err:'Could not load. Check your connection and reload.'}};
 let LANG='ja';try{LANG=localStorage.getItem('statsLang')||(navigator.language.startsWith('ja')?'ja':'en');}catch(e){}
 let WD=WDS[LANG],L=M[LANG],LOADED=null,STATE=null;
 let C,TEX={},hourly={},part='all';
@@ -157,6 +159,24 @@ function daily(){
   el.innerHTML=rows.map(x=>'<div class="col"><span class="n">'+((x.e+x.r)||'')+'</span><div class="stk"><div style="height:'+(H*x.e/max)+'px;background:var(--acc)"></div><div style="height:'+(H*x.r/max)+'px;background:var(--ring)"></div></div><span class="d">'+Number(x.d.slice(8))+'</span></div>').join('');
 }
 
+let RMODE='all',DAILY=[{},{}];
+function last7(daily){
+  const today=new Date(Date.now()+9*3600e3),days=[];
+  for(let i=0;i<7;i++){const d=new Date(today);d.setUTCDate(d.getUTCDate()-i);days.push(d.toISOString().slice(0,10));}
+  const sum={};days.forEach(d=>Object.entries((daily||{})[d]||{}).forEach(([k,n])=>{sum[k]=(sum[k]||0)+(Number(n)||0);}));
+  const out={};Object.entries(sum).forEach(([k,n])=>{const [si,bi]=k.split('_');out[k]={count:n,smallId:si,bigId:bi,smallName:(TEX[si]||{}).name,bigName:(TEX[bi]||{}).name};});
+  return out;
+}
+function ranks(){
+  const [st,pairs,ringPairs]=STATE;
+  if(RMODE==='all'){rank($('rE'),pairs);rank($('rR'),ringPairs);$('rnote').textContent='';return;}
+  rank($('rE'),last7(DAILY[0]));rank($('rR'),last7(DAILY[1]));
+  const first=[...Object.keys(DAILY[0]||{}),...Object.keys(DAILY[1]||{})].sort()[0];
+  const cut=new Date(Date.now()+9*3600e3-6*864e5).toISOString().slice(0,10);
+  $('rnote').textContent=first&&first>cut?L.since(first.slice(5).replace('-','/')):'';
+}
+$('rtabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;RMODE=b.dataset.r;document.querySelectorAll('#rtabs button').forEach(x=>x.classList.toggle('on',x===b));if(STATE)ranks();};
+
 function rank(el,obj){
   const list=Object.values(obj||{}).filter(v=>v&&typeof v==='object').sort((a,b)=>(Number(b.count)||0)-(Number(a.count)||0)).slice(0,20);
   if(!list.length){el.innerHTML='<div class="empty">'+L.noData+'</div>';return;}
@@ -168,7 +188,7 @@ function applyLang(){
   WD=WDS[LANG];L=M[LANG];document.documentElement.lang=LANG;
   document.querySelectorAll('[data-i]').forEach(el=>{const t=T[el.dataset.i];if(t&&!(el.id==='upd'&&STATE))el.innerHTML=t[LANG];});
   document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));
-  if(STATE){const [st,pairs,ringPairs]=STATE;cards(st,pairs,ringPairs);daily();heatmap();weekdays();rank($('rE'),pairs);rank($('rR'),ringPairs);
+  if(STATE){const [st,pairs,ringPairs]=STATE;cards(st,pairs,ringPairs);daily();heatmap();weekdays();ranks();
     $('upd').textContent=L.upd(LOADED.toLocaleString(LANG==='ja'?'ja-JP':'en-GB',{timeZone:'Asia/Tokyo'}));}
 }
 document.querySelector('.lang').onclick=e=>{const b=e.target.closest('button');if(!b)return;LANG=b.dataset.l;try{localStorage.setItem('statsLang',LANG);}catch(x){}applyLang();};
@@ -187,14 +207,15 @@ fetch('config.json').then(r=>r.json()).then(cfg=>{
   const db=firebase.database();
   const read=p=>db.ref(p).once('value').then(s=>s.val()).catch(e=>{console.warn('[stats] cannot read',p,e&&e.message);return null;});
   const keys=['earringVisits','ringVisits','earringDesigns','hourly'];
-  return Promise.all([...keys.map(k=>read('stats/'+k)),read('pairs'),read('ringPairs')]).then(v=>{
+  return Promise.all([...keys.map(k=>read('stats/'+k)),read('pairs'),read('ringPairs'),read('pairsDaily'),read('ringPairsDaily')]).then(v=>{
+    DAILY=[v[6]||{},v[7]||{}];
     const st={};keys.forEach((k,i)=>{if(v[i]!==null)st[k]=v[i];});
-    if(v.every(x=>x===null))throw new Error('nothing readable');
+    if(v.slice(0,6).every(x=>x===null))throw new Error('nothing readable');
     return [st,v[4]||{},v[5]||{}];
   });
 }).then(([st,pairs,ringPairs])=>{
-  hourly=st.hourly||{};
-  cards(st,pairs,ringPairs);daily();heatmap();weekdays();rank($('rE'),pairs);rank($('rR'),ringPairs);
+  hourly=st.hourly||{};STATE=[st,pairs,ringPairs];
+  cards(st,pairs,ringPairs);daily();heatmap();weekdays();ranks();
   LOADED=new Date();STATE=[st,pairs,ringPairs];$('upd').textContent=L.upd(LOADED.toLocaleString(LANG==='ja'?'ja-JP':'en-GB',{timeZone:'Asia/Tokyo'}));
 }).catch(e=>{
   console.error(e);
